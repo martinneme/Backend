@@ -26,7 +26,7 @@ export default class ProductManager {
     }
   }
 
-getProducts=()=>{
+getProducts(){
 console.log(this.products);
 }
 
