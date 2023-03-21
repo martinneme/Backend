@@ -23,6 +23,8 @@ export default class ProductManager {
 
       this.products.push(product);
       this.nextID++;
+    }else{
+        console.error("No contiene las propiedades requeridas")
     }
   }
 
