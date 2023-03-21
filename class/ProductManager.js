@@ -13,12 +13,12 @@ export default class ProductManager {
 
       const product = {
         id: this.nextID,
-        title: title || "",
-        description: description || "",
+        title: title,
+        description: description,
         price: price || 0,
-        thumbnail: thumbnail || "",
-        code: code || 0,
-        stock: stock || 0,
+        thumbnail: thumbnail,
+        code: code,
+        stock: stock,
       };
 
       this.products.push(product);
