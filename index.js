@@ -1,24 +1,44 @@
-import ProductManager from './class/ProductManager.js';
+import FileManager from "./Class/productManager.js";
 
-const productos = new ProductManager();
+////////////
+// Se creará una instancia de la clase “ProductManager”
+const nuevoArchivo = new FileManager('./nuevoArchivo.txt')
+////////////
 
-//Muestra productos Array vacio
-productos.getProducts()
+////////////
+//Se llamará “getProducts” recién creada la instancia, debe devolver un arreglo vacío []
+await nuevoArchivo.getsProducts()
+////////////
 
-//Se agregan productos
-productos.addProducts("Mate","Con bombilla",1547,"http://image.com",1254,4);
-productos.addProducts("Yerba","Playadito",150,"http://image.com",1251,24);
+////////////
+// Se llamará al método “addProduct” con los campos:
+// title: “producto prueba”
+// description:”Este es un producto prueba”
+// price:200,
+// thumbnail:”Sin imagen”
+// code:”abc123”,
+// stock:25
+await nuevoArchivo.addProduct({title:"producto prueba”",description:"Este es un producto prueba",price:200,thumbnail:"Sin imagen",code:"abc123",stock:25});
+///////////
 
-//se muestra producto con cada elemento con su id y code unico.
-productos.getProducts()
+///////////
+// El objeto debe agregarse satisfactoriamente con un id generado automáticamente SIN REPETIRSE
+// Se llamará el método “getProducts” nuevamente, esta vez debe aparecer el producto recién agregado
+await nuevoArchivo.getsProducts()   
+////////////
 
-//se agrega un producto repetido - code duplicado - 
-productos.addProducts("Yerba","Playadito",150,"http://image.com",1251,24);
+////////////
+// Se llamará al método “getProductById” y se corroborará que devuelva el producto con el id especificado, en caso de no existir, debe arrojar un error.
+await nuevoArchivo.getProductById(0)
+////////////
 
-//se pide el producto por id existente
-productos.getProductById(1);
+////////////
+// Se llamará al método “updateProduct” y se intentará cambiar un campo de algún producto, se evaluará que no se elimine el id 
+//y que sí se haya hecho la actualización.
+await nuevoArchivo.updateProduct(0,{stock:78,description:"test update"})
+////////////
 
-
-//se pide el producto por id  inexistente existente
-productos.getProductById(4);
-
+////////////
+// Se llamará al método “deleteProduct”, se evaluará que realmente se elimine el producto o que arroje un error en caso de no existir.
+await nuevoArchivo.deleteProduct(0)
+////////////
