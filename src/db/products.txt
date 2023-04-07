@@ -1,0 +1,1 @@
+[{"id":1,"title": "Bolígrafo","description": "Bolígrafo de tinta negra","price": 0.99,"thumbnail": "https://example.com/boligrafo.jpg","code": "BOL01","stock": 100 },{"id":2,"title": "Lapicera","description": "Bolígrafo de tinta blanca","price": 0.99,"thumbnail": "https://example.com/boligraf.jpg","code": "BOL04","stock": 200 }]
