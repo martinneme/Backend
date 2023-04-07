@@ -82,11 +82,12 @@ export default class FileManager {
         throw new Error()
     }
     return product; 
-    }catch(e){
-        if(typeof error == 'undefined'){
-            return `No fue posible consultar el produto ${id}, asegurese que sea el correcto`;
-        }
-    }
+    }catch(error){
+        const myError = new Error('Producto no encontrado');
+        myError.details = {code: 404, message: 'Producto no encontrado'};
+        throw myError;
+        
+    }   
    
   }
 

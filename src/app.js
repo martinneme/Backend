@@ -13,8 +13,13 @@ app.get('/products',async (req,res)=>{
 
 app.get('/products/:pid',async (req,res)=>{
     const pid = parseInt(req.params.pid);
-    const product = await productsManager.getProductById(pid)
-    res.send(product);
+    try{
+      const product = await productsManager.getProductById(pid)
+    res.send(product);  
+    }catch(error){
+         res.status(404).send(error.details);
+    }
+    
 })
 
 app.listen(8080,()=>{
