@@ -17,6 +17,6 @@ app.get('/products/:pid',async (req,res)=>{
     res.send(product);
 })
 
-app.listen(3000,()=>{
-    console.log("Express Server listening on PORT 3000")
+app.listen(8080,()=>{
+    console.log("Express Server listening on PORT 8080")
 })

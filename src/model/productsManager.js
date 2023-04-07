@@ -84,7 +84,7 @@ export default class FileManager {
     return product; 
     }catch(e){
         if(typeof error == 'undefined'){
-            console.log(`No fue posible consultar el produto ${id}, asegurese que sea el correcto`);
+            return `No fue posible consultar el produto ${id}, asegurese que sea el correcto`;
         }
     }
    
