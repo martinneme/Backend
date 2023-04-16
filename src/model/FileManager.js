@@ -1,3 +1,4 @@
+import { throws } from "assert";
 import { promises as fs } from "fs";
 
 export default class FileManager {
@@ -35,20 +36,8 @@ export default class FileManager {
     return (await lastElement.id) + 1;
   }
 
-  async addProduct(obj) {
+  async addElement(obj) {
     try {
-      if (
-        (!obj.title,
-        !obj.description,
-        !obj.price,
-        !obj.thumbnail,
-        !obj.code,
-        !obj.stock)
-      ) {
-        throw new Error(
-          "se esperan las propiedades title, description, price, thumbnail, code y  stock"
-        );
-      } else {
         const content = await this.readFile();
         const contentText = await JSON.parse(content);
         contentText.length ? (obj.id = await this.lastID()) : (obj.id = 0);
@@ -57,14 +46,14 @@ export default class FileManager {
         };
 
         contentText.push(product);
-
+        console.log(contentText);
         await this.writeFile(JSON.stringify(contentText));
         console.log("Se ha ingresado el producto correctamente");
-      }
     } catch (e) {
        console.log(e)
 
     }
+    return obj.id
   }
 
   async getsProducts() {
@@ -88,16 +77,15 @@ export default class FileManager {
         throw myError;
         
     }   
-   
   }
 
-  async updateProduct(id, propertys) {
+  async update(id, propertys) {
     try {
       const content = await this.readFile();
       const contentText = await JSON.parse(content);
       let product = contentText.find((element) => element.id == id);
       if (!product) {
-        throw new Error(`El producto ${id} no existe`);
+        throw new Error()
       }
       Object.keys(propertys).forEach(prop=>{
         if(prop !== 'id'){
@@ -105,32 +93,33 @@ export default class FileManager {
         }
       })
       await this.writeFile(JSON.stringify(contentText))
-    console.log(`la/s propiedad/es ${Object.keys(propertys)} del producto id:${id} fueron actualizadas`);
+      const props = Object.keys(propertys).filter(e=> e != 'id')
+   return `la/s propiedad/es ${props} para el id:${id} fueron actualizadas`;
      
-    } catch (e) {
-        if(typeof error == 'undefined'){
-            console.log(`No fue posible actualizar el produto ${id}, asegurese que sea el correcto`);
-        }
+    }catch(e){
+ const myError = new Error(`El elemento ${id} no pudo ser actualizado`);
+        myError.details = {code: 404, message: `No fue posible actualizar la/s propiedad/es ${Object.keys(propertys)} para el id:${id}. Verifique que el id exista.`};
+        throw myError
     }
   }
 
 
-  async deleteProduct(id) {
+  async delete(id) {
     try {
 const content = await this.readFile();
     const contentText = await JSON.parse(content);
     const productIndex =  await contentText.findIndex((element) => element.id === id);
     if(productIndex === -1){
-      throw new error(`El producto id:${id} no existe`)
+      throw new error()
     }else{
      contentText.splice(productIndex,1)
      await this.writeFile(JSON.stringify(contentText))
-     console.log(`El producto id:${id} fue eliminado`)
+     return `El producto id:${id} fue eliminado`;
     }
     }catch(e){
-        if(typeof error == 'undefined'){
-            console.log(`No fue posible eliminar el produto ${id}, asegurese que sea el correcto`);
-        }
+      const myError = new Error(`El elemento ${id} no pudo ser eliminado`);
+        myError.details = {code: 404, message: `No fue posible eliminar  el id:${id}. Verifique que el id exista.`};
+        throw myError
     }
   }
 }
