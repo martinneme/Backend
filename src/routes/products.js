@@ -33,8 +33,8 @@ productsRouter.get("/", async (req, res) => {
 // });
 
 productsRouter.get("/realtimeproducts", async (req, res) => {
-    res.setHeader('Content-Type', 'text/html');
-    res.sendFile(`${__dirname}/views/realTimeProducts.handlebars`);
+
+    res.render('realTimeProducts')
 });
 
 

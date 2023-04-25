@@ -27,7 +27,17 @@ app.use('/',productsRouter)
 socketServer.on('connection',async (socket) =>{
     console.log("socket conectado");
 
-    socket.emit("sendProducts",await fileManager.getsProducts())
+
+
+    socket.emit("SEND_PRODUCTS",await fileManager.getsProducts())
+
+
+    socket.on("PRODUCT_ADDED",async(obj)=>{
+        console.log("llego:"+obj)
+       const res =  await fileManager.addElement(obj)
+       console.log(res)
+        socketServer.sockets.emit("ADD_PRODUCT",await fileManager.getsProducts())
+      })
 })
 
 

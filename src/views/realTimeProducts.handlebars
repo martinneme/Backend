@@ -5,7 +5,7 @@
         <div class="product" >
             <p>Title:</p>
             <p class="title">{{this.title}}</p>
-            <img class="image" src="{{this.thumbnails.[0]}}"></img>
+            {{!-- <img class="image" src="{{this.thumbnails.[0]}}"></img> --}}
             <p>description:</p>
             <p class="description">{{this.description}}</p>
             <p>Price:</p>
@@ -17,7 +17,7 @@
     </div>
 </div>
 <div class="form">
-      <form class="formulario" action="/realtimeproducts" method="POST" >
+    <form class="form-group"  target="noredirect" id="send">
       title:
       <input type="text" name="title" id="title"/>
       description:
