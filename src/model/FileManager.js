@@ -46,7 +46,6 @@ export default class FileManager {
         };
 
         contentText.push(product);
-        console.log(contentText);
         await this.writeFile(JSON.stringify(contentText));
         console.log("Se ha ingresado el producto correctamente");
     } catch (e) {

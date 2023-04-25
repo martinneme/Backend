@@ -9,7 +9,6 @@ function addProductValidator(req, res, next) {
     }
 
     for (const prop in propiedadesProducto){
-        console.log(propiedadesEsperadas[prop])
         if (!propiedadesEsperadas.includes(propiedadesProducto[prop])) {
             error.description=error.description+`.El request contiene la propiedad ${propiedadesProducto[prop]} no esperada`
         res.status(400).json(error);
