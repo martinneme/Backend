@@ -1,9 +1,7 @@
 const socket = io();
 
 
-socket.emit('addProduct',element=>{
-    console.log("producto agregado");
-})
+
 
 socket.on("SEND_PRODUCTS", async (response) => {
 
@@ -54,17 +52,17 @@ document.querySelector("#products").innerHTML += prod;
     addprod.reset();
     })
 
-    socket.on("ADD_PRODUCT",elemtent=>{
+    socket.on("ADD_PRODUCT",element=>{
         const product = `<div class="product" >
     <p>Title:</p>
-    <p class="title">${elemtent.title}</p>
-  <img class="image" src="${elemtent.thumbnails}"></img> 
+    <p class="title">${element.title}</p>
+  <img class="image" src="${element.thumbnails}"></img> 
     <p>description:</p>
-    <p class="description">${elemtent.description}</p>
+    <p class="description">${element.description}</p>
     <p>Price:</p>
-    <p class="price">${elemtent.price}</p>
+    <p class="price">${element.price}</p>
     <p>Stock:</p>
-    <p class="stock">${elemtent.stock}</p>
+    <p class="stock">${element.stock}</p>
 </div>`
-document.querySelector("#products").appendChild(prod); 
+document.querySelector("#products").innerHTML+=product
     })
