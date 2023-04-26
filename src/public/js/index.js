@@ -1,30 +1,35 @@
 const socket = io();
 
 
+ function generateProduct(product) {
+    return  `<div class="product" id=${"product-"+product.id}>
+    <p>id:</p>
+    <p class="id">${product.id}</p>
+    <p>Title:</p>
+    <p class="title">${product.title}</p>
+      <img class="image" src="${product.thumbnails[0]}"></img>
+      <p>Description:</p>
+      <p class="description">${product.description}</p>
+      <p>Price:</p>
+      <p class="price">${product.price}</p>
+      <p>Stock:</p>
+      <p class="stock">${product.stock}</p>
+    </div>`;
+  }
+
 
 
 socket.on("SEND_PRODUCTS", async (response) => {
-
    response.forEach(element => {
-   const prod = `<div class="product" >
-    <p>Title:</p>
-    <p class="title">${element.title}</p>
-  <img class="image" src="${element.thumbnails[0].lenght > 2 ? element.thumbnails[0]:element.thumbnails }"></img> 
-    <p>description:</p>
-    <p class="description">${element.description}</p>
-    <p>Price:</p>
-    <p class="price">${element.price}</p>
-    <p>Stock:</p>
-    <p class="stock">${element.stock}</p>
-</div>`
-document.querySelector("#products").innerHTML += prod; 
+   const prod = generateProduct(element);
+    document.querySelector("#products").innerHTML += prod; 
    });
       
     });
 
 
- const addproduct = document.querySelector('#send')
-
+ const addproduct = document.querySelector('#send');
+ 
  addproduct.addEventListener('submit',(e)=>{
       e.preventDefault();
     
@@ -38,10 +43,10 @@ document.querySelector("#products").innerHTML += prod;
     const status = document.getElementById("status").value;
     
     const prod = {
-    title,
+        title,
      price,
      description,
-      thumbnails,
+     thumbnails,
       category,
       code,
       stock,
@@ -49,20 +54,26 @@ document.querySelector("#products").innerHTML += prod;
     }
     socket.emit("PRODUCT_ADDED",prod)
     
-    addprod.reset();
-    })
+    addproduct.reset();
+})
 
-    socket.on("ADD_PRODUCT",element=>{
-        const product = `<div class="product" >
-    <p>Title:</p>
-    <p class="title">${element.title}</p>
-  <img class="image" src="${element.thumbnails}"></img> 
-    <p>description:</p>
-    <p class="description">${element.description}</p>
-    <p>Price:</p>
-    <p class="price">${element.price}</p>
-    <p>Stock:</p>
-    <p class="stock">${element.stock}</p>
-</div>`
+
+const deleteProduct = document.querySelector('#delete');
+
+deleteProduct.addEventListener('submit',(e)=>{
+    e.preventDefault();
+    const id = document.getElementById("id").value;
+    if(id){
+       socket.emit("PRODUCT_DELETE",id); 
+    }
+    deleteProduct.reset()
+})
+
+socket.on("PRODUCT_DELETED",id=>{
+     document.querySelector(`#product-${id}`).remove();
+})
+
+    socket.on("ADD_PRODUCT",(element)=>{
+        const product = generateProduct(element)
 document.querySelector("#products").innerHTML+=product
     })

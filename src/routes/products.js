@@ -16,21 +16,21 @@ productsRouter.get("/", async (req, res) => {
     res.render('home',{products})
 });
 
-// productsRouter.post("/realtimeproducts", addProductValidator, async (req, res) => {
-//     try {
-//         const element = req.body;
-//         const products = await productsManager.addElement(element);
-//         if(products){
-//             io.emit('productAdded',element);
-//             res.json();
-//         }
+productsRouter.post("/products", addProductValidator, async (req, res) => {
+    try {
+        const element = req.body;
+        const products = await productsManager.addElement(element);
+        if(products){
+
+            res.send("Producto Agregado!");
+        }
        
-//     } catch (error) {
-//         res.status(400).send().json({
-//             error: error
-//         });
-//     }
-// });
+    } catch (error) {
+        res.status(400).send().json({
+            error: error
+        });
+    }
+});
 
 productsRouter.get("/realtimeproducts", async (req, res) => {
 

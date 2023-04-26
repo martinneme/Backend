@@ -33,10 +33,16 @@ socketServer.on('connection',async (socket) =>{
 
 
     socket.on("PRODUCT_ADDED",async(obj)=>{
-        console.log("llego:"+obj)
-       const res =  await fileManager.addElement(obj)
-       console.log(res)
-        socketServer.sockets.emit("ADD_PRODUCT",await fileManager.getsProducts())
+        obj.thumbnails= [obj.thumbnails];
+       await fileManager.addElement(obj)
+        socketServer.sockets.emit("ADD_PRODUCT",obj)
+      })
+
+
+      socket.on("PRODUCT_DELETE",async(id)=>{
+       const idProduct = parseInt(id)
+        await fileManager.delete(idProduct);
+        socketServer.sockets.emit("PRODUCT_DELETED",idProduct)
       })
 })
 
