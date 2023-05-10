@@ -1,25 +1,37 @@
 import {
     Router
 } from "express";
-import FileManager from "../model/FileManager.js";
+import Products from "../dao/dbManagers/products.js";
 import addProductValidator from "../middlewares/addProductValidator.js";
 import __dirname from '../utils.js';
 
 
 const productsRouter = Router();
 
-const productsManager = new FileManager("./db/products.json");
+const productsManager = new Products();
 
 productsRouter.get("/", async (req, res) => {
-    const products = await productsManager.getsProducts();
+    const products = await productsManager.getAll();
 
     res.render('home',{products})
 });
 
+productsRouter.get("/", async (req, res) => {
+    try{
+const products = await productsManager.getAll();
+    res.send({status:'success',payload:products})
+    }catch(error){
+        res.status(400).send({status:'error',error})
+    }
+    
+});
+
+
+
 productsRouter.post("/products", addProductValidator, async (req, res) => {
     try {
         const element = req.body;
-        const products = await productsManager.addElement(element);
+        const products = await productsManager.save(element);
         if(products){
 
             res.send("Producto Agregado!");
