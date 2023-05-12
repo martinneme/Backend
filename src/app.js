@@ -1,6 +1,7 @@
 import express from 'express';
 import productsRouter from './routes/products.js'
 import cartsRouter from './routes/carts.js';
+import messagesRouter from './routes/messages.js'
 import handlebars  from 'express-handlebars';
 import __dirname from './utils.js';
 import {Server as HTTPServer} from 'http'
@@ -26,6 +27,7 @@ app.set('view engine',`handlebars` );
 
 app.use('/products',productsRouter)
 app.use('/carts',cartsRouter)
+app.use('/chat',messagesRouter)
 
 
 try{

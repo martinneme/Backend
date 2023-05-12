@@ -27,7 +27,6 @@ productsRouter.get("/", async (req, res) => {
 // });
 
 
-
 productsRouter.post("/", addProductValidator, async (req, res) => {
     try {
         const element = req.body;

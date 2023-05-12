@@ -92,3 +92,23 @@ h1 {
   .btn-delete:hover {
     background-color: #ff3333;
   }
+  .chatGeneral{
+     background-color: #333;
+  }
+
+  .chat{
+   
+    display: block;
+    width: 50%;
+    margin:auto
+  }
+
+  .chatForm{
+    display: flex;
+    background-color: #333;
+  }
+
+  .message{
+    display: flex;
+    color:white
+  }
