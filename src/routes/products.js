@@ -11,24 +11,24 @@ const productsRouter = Router();
 const productsManager = new Products();
 
 productsRouter.get("/", async (req, res) => {
-    const products = await productsManager.getAll();
+    const products = await productsManager.getAll() ;
 
     res.render('home',{products})
 });
 
-productsRouter.get("/", async (req, res) => {
-    try{
-const products = await productsManager.getAll();
-    res.send({status:'success',payload:products})
-    }catch(error){
-        res.status(400).send({status:'error',error})
-    }
+// productsRouter.get("/", async (req, res) => {
+//     try{
+// const products = await productsManager.getAll();
+//     res.send({status:'success',payload:products})
+//     }catch(error){
+//         res.status(400).send({status:'error',error})
+//     }
     
-});
+// });
 
 
 
-productsRouter.post("/products", addProductValidator, async (req, res) => {
+productsRouter.post("/", addProductValidator, async (req, res) => {
     try {
         const element = req.body;
         const products = await productsManager.save(element);
@@ -39,6 +39,21 @@ productsRouter.post("/products", addProductValidator, async (req, res) => {
        
     } catch (error) {
         res.status(400).send().json({
+            error: error
+        });
+    }
+});
+
+
+productsRouter.put("/:id",async (req, res) => {
+    try {
+        const element = req.body;
+        const id = req.params.id
+        const products = await productsManager.update(id,element);
+        res.json({status:'success', payload: products});
+             
+    } catch (error) {
+        res.status(400).json({
             error: error
         });
     }

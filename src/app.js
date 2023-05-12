@@ -1,10 +1,11 @@
 import express from 'express';
 import productsRouter from './routes/products.js'
+import cartsRouter from './routes/carts.js';
 import handlebars  from 'express-handlebars';
 import __dirname from './utils.js';
 import {Server as HTTPServer} from 'http'
 import {Server as SocketServer} from 'socket.io'
-import FileManager from './model/FileManager.js';
+import FileManager from './dao/fileManagers/FileManager.js';
 import mongoose from 'mongoose';
 
 
@@ -23,7 +24,8 @@ app.engine('handlebars',handlebars.engine());
 app.set('views',`${__dirname}/views` ); 
 app.set('view engine',`handlebars` ); 
 
-app.use('/',productsRouter)
+app.use('/products',productsRouter)
+app.use('/carts',cartsRouter)
 
 
 try{

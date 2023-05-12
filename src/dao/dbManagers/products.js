@@ -16,5 +16,10 @@ export default class Products {
         return resultAdd;
     }
 
+    update = async (id,props) => {
+        const resultUpdate = await productModel.updateOne({_id:id},{$set:props})
+        return resultUpdate;
+    }
+
  
 }

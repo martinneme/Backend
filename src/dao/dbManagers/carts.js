@@ -11,13 +11,27 @@ export default class Carts {
     }
     
 
-    save = async (cart) => {
+    create = async (cart) => {
         const resultAdd = await cartsModel.create(cart);
         return resultAdd;
     }
 
+    addProductToCart = async (idCart,idProd) =>{
+        const cart = await cartsModel.findById({_id:idCart});
+        cart.products.push(idProd)
+        const response = cart.save()
+        return response;
+    }
+
     update = async (id,prod) => {
-        const resultAdd = await cartsModel.update({_id:id},);
+        const resultAdd = await cartsModel.update({_id:id},{$set:prod});
         return resultAdd;
     }
+
+    findCartById = async (idCart) => {
+        const resultCart = await cartsModel.findById({_id:idCart}).lean()
+        return resultCart
+    }
+
+   
 }
