@@ -4,7 +4,7 @@ const socket = io();
  function generateProduct(product) {
     return  `<div class="product" id=${"product-"+product.id}>
     <p>id:</p>
-    <p class="id">${product.id}</p>
+    <p class="id">${product._id}</p>
     <p>Title:</p>
     <p class="title">${product.title}</p>
       <img class="image" src="${product.thumbnails[0]}"></img>

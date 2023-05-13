@@ -8,12 +8,14 @@ import {Server as HTTPServer} from 'http'
 import {Server as SocketServer} from 'socket.io'
 import FileManager from './dao/fileManagers/FileManager.js';
 import Products from './dao/dbManagers/products.js';
+import Messages from './dao/dbManagers/messages.js';
 import mongoose from 'mongoose';
 
 
 
 const fileManager = new FileManager("./db/products.json");
 const productsManager = new Products();
+const messagesManager = new Messages();
 
 const app = express();
 const httpServer = new HTTPServer(app);
@@ -47,19 +49,23 @@ socketServer.on('connection',async (socket) =>{
 
     socket.emit("SEND_PRODUCTS",await productsManager.getAll())
 
-
     socket.on("PRODUCT_ADDED",async(obj)=>{
         obj.thumbnails= [obj.thumbnails];
-        console.log("se ejecuto")
-       await fileManager.addElement(obj)
+       await productsManager.save(obj)
         socketServer.sockets.emit("ADD_PRODUCT",obj)
       })
-
 
       socket.on("PRODUCT_DELETE",async(id)=>{
        const idProduct = parseInt(id)
         await fileManager.delete(idProduct);
         socketServer.sockets.emit("PRODUCT_DELETED",idProduct)
+      })
+
+
+      socket.on("MESSAGE_ADDED",async(message)=>{
+
+await messagesManager.save(message);
+socketServer.sockets.emit("ADD_MESSAGE_CHAT",message)
       })
 })
 
