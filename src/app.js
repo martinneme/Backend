@@ -19,7 +19,10 @@ export  const io = socketServer;
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
-app.use(express.static(`${__dirname}/public`));
+app.use('/products/',express.static(`${__dirname}/public`));
+app.use('/products/realTimeProducts/',express.static(`${__dirname}/public`));
+app.use('/chat/',express.static(`${__dirname}/public`));
+app.use('/carts/',express.static(`${__dirname}/public`));
 
 app.engine('handlebars',handlebars.engine());
 app.set('views',`${__dirname}/views` ); 
@@ -39,13 +42,12 @@ console.log("error conecction db");
 socketServer.on('connection',async (socket) =>{
     console.log("socket conectado");
 
-
-
     socket.emit("SEND_PRODUCTS",await fileManager.getsProducts())
 
 
     socket.on("PRODUCT_ADDED",async(obj)=>{
         obj.thumbnails= [obj.thumbnails];
+        console.log("se ejecuto")
        await fileManager.addElement(obj)
         socketServer.sockets.emit("ADD_PRODUCT",obj)
       })
@@ -59,7 +61,6 @@ socketServer.on('connection',async (socket) =>{
 })
 
 
-
-app.listen(8080,()=>{
+httpServer.listen(8080,()=>{
     console.log("Express Server listening on PORT 8080")
-})
+})  

@@ -48,4 +48,34 @@
     "thumbnails": ["https://sporting.vtexassets.com/arquivos/ids/197609-1200-1200?v=637105595749470000&width=1200&height=1200&aspect=true", "ruta/imagen29.jpg", "ruta/imagen30.jpg"],
     "status": true,
     "id": 6
+}, {
+    "title": "test",
+    "price": "5",
+    "description": "test deds",
+    "thumbnails": ["http://hgconfecciones.com.ar/wp-content/uploads/Pantalon-Jean-Wonder.jpg?x65218"],
+    "category": "fdf",
+    "code": "sd",
+    "stock": "434",
+    "status": "false",
+    "id": 7
+}, {
+    "title": "test",
+    "price": "5",
+    "description": "test deds",
+    "thumbnails": ["http://hgconfecciones.com.ar/wp-content/uploads/Pantalon-Jean-Wonder.jpg?x65218"],
+    "category": "tst",
+    "code": "ADD001",
+    "stock": "4354",
+    "status": "false",
+    "id": 8
+}, {
+    "title": "test",
+    "price": "5",
+    "description": "test",
+    "thumbnails": ["http://hgconfecciones.com.ar/wp-content/uploads/Pantalon-Jean-Wonder.jpg?x65218"],
+    "category": "tst",
+    "code": "ADD0013",
+    "stock": "4354",
+    "status": "false",
+    "id": 9
 }]

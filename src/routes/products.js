@@ -10,6 +10,7 @@ const productsRouter = Router();
 
 const productsManager = new Products();
 
+
 productsRouter.get("/", async (req, res) => {
     const products = await productsManager.getAll() ;
 
