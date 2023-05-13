@@ -11,7 +11,6 @@ const messagesManager = new Messages();
 
 messagesRouter.get("/", async (req, res) => {
     const messages = await messagesManager.getAll();
-
     res.render('chat',{messages})
 });
 

@@ -7,10 +7,13 @@ import __dirname from './utils.js';
 import {Server as HTTPServer} from 'http'
 import {Server as SocketServer} from 'socket.io'
 import FileManager from './dao/fileManagers/FileManager.js';
+import Products from './dao/dbManagers/products.js';
 import mongoose from 'mongoose';
 
 
+
 const fileManager = new FileManager("./db/products.json");
+const productsManager = new Products();
 
 const app = express();
 const httpServer = new HTTPServer(app);
@@ -19,10 +22,10 @@ export  const io = socketServer;
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+app.use(express.static(`${__dirname}/public`));
+app.use('/products/realtimeproducts',express.static(`${__dirname}/public`));
 app.use('/products/',express.static(`${__dirname}/public`));
-app.use('/products/realTimeProducts/',express.static(`${__dirname}/public`));
-app.use('/chat/',express.static(`${__dirname}/public`));
-app.use('/carts/',express.static(`${__dirname}/public`));
+app.use('/chats/',express.static(`${__dirname}/public`));
 
 app.engine('handlebars',handlebars.engine());
 app.set('views',`${__dirname}/views` ); 
@@ -42,7 +45,7 @@ console.log("error conecction db");
 socketServer.on('connection',async (socket) =>{
     console.log("socket conectado");
 
-    socket.emit("SEND_PRODUCTS",await fileManager.getsProducts())
+    socket.emit("SEND_PRODUCTS",await productsManager.getAll())
 
 
     socket.on("PRODUCT_ADDED",async(obj)=>{

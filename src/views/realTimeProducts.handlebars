@@ -1,8 +1,8 @@
 <div>
     <h1>Products</h1>
-    <div class="box">
+    <div class="box" id="products" >
         {{#each products}}
-        <div class="product">
+        <div class="product" >
             <p>Title:</p>
             <p class="title">{{this.title}}</p>
             <img class="image" src="{{this.thumbnails.[0]}}"></img>
@@ -46,5 +46,9 @@
 </div>
 <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 <script src="/js/index.js"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
-
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"
+></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+></script>

@@ -33,10 +33,8 @@ productsRouter.post("/", addProductValidator, async (req, res) => {
         const element = req.body;
         const products = await productsManager.save(element);
         if(products){
-
             res.send("Producto Agregado!");
         }
-       
     } catch (error) {
         res.status(400).send().json({
             error: error
@@ -61,7 +59,8 @@ productsRouter.put("/:id",async (req, res) => {
 
 productsRouter.get("/realtimeproducts", async (req, res) => {
     const products = await productsManager.getAll() ;
-    res.render('realTimeProducts',{products})
+    
+    res.render('realTimeProducts')
 });
 
 
