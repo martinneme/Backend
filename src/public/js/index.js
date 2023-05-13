@@ -30,8 +30,10 @@ socket.on("SEND_PRODUCTS", async (response) => {
 
  const addproduct = document.querySelector('#send');
  
+ 
+ 
  addproduct.addEventListener('submit',(e)=>{
-      e.preventDefault();
+   e.preventDefault();
     
       const title = document.getElementById("title").value;
     const price = document.getElementById("price").value;
@@ -55,8 +57,26 @@ socket.on("SEND_PRODUCTS", async (response) => {
     socket.emit("PRODUCT_ADDED",prod)
     
     addproduct.reset();
-})
+  })
+  
+  const newmessage = document.querySelector('#newmessage');
 
+  newmessage.addEventListener('submit',(e)=>{
+    e.preventDefault();
+  
+    const title = document.getElementById("email").value;
+  const price = document.getElementById("message").value;
+
+  
+  const message = {
+      email,
+   message,
+
+  }
+  socket.emit("MESSAGE_ADDED",message)
+  
+  newmessage.reset();
+})
 
 const deleteProduct = document.querySelector('#delete');
 

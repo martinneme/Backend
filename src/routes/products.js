@@ -59,8 +59,8 @@ productsRouter.put("/:id",async (req, res) => {
 });
 
 productsRouter.get("/realtimeproducts", async (req, res) => {
-
-    res.render('realTimeProducts')
+    const products = await productsManager.getAll() ;
+    res.render('realTimeProducts',{products})
 });
 
 

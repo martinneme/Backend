@@ -1,27 +1,31 @@
 <div class="chatGeneral">
-    <h1>chat</h1>
-    <div class="chat" id="chat" >
-        {{#each messages}}
-        <div class="message" >
-            <p>user:</p>
-            <p class="title">{{this.email}}</p>
-            <p>message:</p>
-            <p class="description">{{this.message}}</p>
-            <p>time:</p>
-            <p class="price">{{this.timestamp}}</p>
-        </div>
-        {{/each}}
-    </div>
+  <h1>chat</h1>
+  <div class="chat" id="chat">
+    {{#each messages}}
+      <div class="message">
+        <p class="title">user:{{this.email}}</p>
+        <p class="description">Message:{{this.message}}</p>
+        <p class="time">time:{{this.timestamp}}</p>
+      </div>
+    {{/each}}
+  </div>
 </div>
 <div class="chatForm">
-    <form class="form-group"  target="noredirect" id="chat">
-      Eliminar ID:
-      <input type="text" name="id" id="id"/>
-      <input type="text" name="id" id="id"/>
-<button type="submit" class="btn-send" >Enviar</button>
-    </form>
+  <form class="form-group" target="noredirect" id="newmessage">
+    <input type="text" name="email" id="email" placeholder="email" />
+    <input type="text" name="message" id="message" placeholder="message" />
+    <button type="submit" class="btn-send">Enviar</button>
+  </form>
 </div>
+<script>
+  let chatBox = document.getElementById("chat"); chatBox.scrollTop =
+  chatBox.scrollHeight;
+</script>
 <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 <script src="/js/index.js"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
-
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"
+></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+></script>

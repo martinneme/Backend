@@ -36,6 +36,30 @@ await mongoose.connect('mongodb+srv://mnmongodb:dbpass07@dbmongoazure.nrqqfgp.mo
 console.log("error conecction db");
 }
 
+socketServer.on('connection',async (socket) =>{
+    console.log("socket conectado");
+
+
+
+    socket.emit("SEND_PRODUCTS",await fileManager.getsProducts())
+
+
+    socket.on("PRODUCT_ADDED",async(obj)=>{
+        obj.thumbnails= [obj.thumbnails];
+       await fileManager.addElement(obj)
+        socketServer.sockets.emit("ADD_PRODUCT",obj)
+      })
+
+
+      socket.on("PRODUCT_DELETE",async(id)=>{
+       const idProduct = parseInt(id)
+        await fileManager.delete(idProduct);
+        socketServer.sockets.emit("PRODUCT_DELETED",idProduct)
+      })
+})
+
+
+
 app.listen(8080,()=>{
     console.log("Express Server listening on PORT 8080")
 })
