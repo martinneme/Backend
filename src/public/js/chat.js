@@ -24,7 +24,9 @@ const newmessage = document.querySelector('#newmessage');
   }
   socket.emit("MESSAGE_ADDED",newmsg)
   
-  newmessage.reset();
+
+  document.getElementById("message").value =""
+  // newmessage.reset();
 })
 
 
@@ -32,5 +34,5 @@ socket.on("ADD_MESSAGE_CHAT",async (message)=>{
   message.timestamp = new Date()
   const msg = generateNewMessage(message);
   document.querySelector("#chat").innerHTML += msg; 
-  let chatBox = document.getElementById("chat"); chatBox.scrollTop = chatBox.scrollHeight;
+  let chatBox = document.getElementById("chatGeneral"); chatBox.scrollTop = chatBox.scrollHeight;
 })

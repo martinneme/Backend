@@ -1,10 +1,11 @@
-<div class="chatGeneral">
+<div class="chatBox" > 
+  <div class="chatGeneral" id="chatGeneral">
   <h1>chat</h1>
   <div class="chat" id="chat">
     {{#each messages}}
       <div class="message">
-        <p class="title">user:{{this.email}}</p>
-        <p class="description">Message:{{this.message}}</p>
+        <p class="title" style="color: rgb(150, 159, 245);">{{this.email}}</p>
+        <p class="description">{{this.message}}</p>
         <p class="time">time:{{this.timestamp}}</p>
       </div>
     {{/each}}
@@ -13,13 +14,16 @@
 <div class="chatForm">
   <form class="form-group" target="noredirect" id="newmessage">
     <input type="text" name="email" id="email" placeholder="email" />
-    <input type="text" name="message" id="message" placeholder="message" />
+    <input type="text" name="message" id="message" placeholder="message" autocomplete="off"/>
     <button type="submit" class="btn-send">Enviar</button>
   </form>
 </div>
+</div>
+
 <script>
-  let chatBox = document.getElementById("chat"); chatBox.scrollTop =
-  chatBox.scrollHeight;
+      let chatBox = document.getElementById("chatGeneral"); 
+  chatBox.scrollTop =chatBox.scrollHeight;
+
 </script>
 <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 <script src="/js/chat.js"></script>
