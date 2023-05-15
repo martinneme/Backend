@@ -18,10 +18,5 @@ export default class Messages {
     }
 
 
-    update = async (id,props) => {
-        const resultUpdate = await messagesModel.updateOne({_id:id},{$set:props})
-        return resultUpdate;
-    }
-
  
 }

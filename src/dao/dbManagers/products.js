@@ -22,8 +22,8 @@ export default class Products {
     }
 
     delete = async (id) => {
-        const resultUpdate = await productModel.deleteOne({_id:id})
-        return resultUpdate;
+        const resultDelete = await productModel.deleteOne({_id:id})
+        return resultDelete;
     }
 
  

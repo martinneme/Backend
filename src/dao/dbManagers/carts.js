@@ -33,5 +33,15 @@ export default class Carts {
         return resultCart
     }
 
+    delete = async (id) => {
+        const resultUpdate = await productModel.deleteOne({_id:id})
+        return resultUpdate;
+    }
+
+    delete = async (id) => {
+        const resultDelete = await productModel.deleteOne({_id:id})
+        return resultDelete;
+    }
+
    
 }
