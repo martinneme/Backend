@@ -1,19 +1,10 @@
 import { cartsModel } from "../models/carts.js";
+import ManagerDb from "./managerDb.js";
 
-export default class Carts {
+export default class Carts extends ManagerDb {
     constructor(){
-        console.log("working products with database")
-    }
-
-    getAll = async () =>{
-        const carts = await cartsModel.find().lean();
-        return carts;
-    }
-    
-
-    create = async (cart) => {
-        const resultAdd = await cartsModel.create(cart);
-        return resultAdd;
+        console.log("working products with database");
+        super(cartsModel)
     }
 
     addProductToCart = async (idCart,idProd) =>{
@@ -23,25 +14,9 @@ export default class Carts {
         return response;
     }
 
-    update = async (id,prod) => {
-        const resultAdd = await cartsModel.update({_id:id},{$set:prod});
-        return resultAdd;
-    }
-
     findCartById = async (idCart) => {
         const resultCart = await cartsModel.findById({_id:idCart}).lean()
         return resultCart
     }
-
-    delete = async (id) => {
-        const resultUpdate = await productModel.deleteOne({_id:id})
-        return resultUpdate;
-    }
-
-    delete = async (id) => {
-        const resultDelete = await productModel.deleteOne({_id:id})
-        return resultDelete;
-    }
-
    
 }

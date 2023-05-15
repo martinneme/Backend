@@ -3,9 +3,9 @@ const socket = io();
 
 function generateNewMessage(message) {
   return  `<div class="message">
-  <p class="title">user:${message.email}</p>
-  <p class="description">Message:${message.message}</p>
-  <p class="time">time:${message.timestamp}</p>
+  <p class="title" style="color: rgb(150, 159, 245);">${message.email}</p>
+  <p class="description">${message.message}</p>
+  <p class="time">${message.timestamp}</p>
 </div>`;
 }
 const newmessage = document.querySelector('#newmessage');

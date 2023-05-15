@@ -1,20 +1,9 @@
 import { messagesModel } from "../models/messages.js";
+import ManagerDb from "./managerDb.js";
 
-export default class Messages {
+export default class Messages extends ManagerDb{
     constructor(){
-        console.log("working messages with database")
-    }
-
-    getAll = async () =>{
-        const products = await messagesModel.find({}, null, { sort: { timestamp: 1 } }).lean();
-        return products;
-    }
-    
-
-    save = async (message) => {
-      
-        const resultAdd = await messagesModel.create(message);
-        return resultAdd;
+    super(messagesModel)
     }
 
 

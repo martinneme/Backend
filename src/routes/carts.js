@@ -9,11 +9,6 @@ const cartsRouter = Router();
 
 const cartsManager = new Carts();
 
-// cartsRouter.get("/", async (req, res) => {
-//     const products = await cartsManager.getAll() ;
-
-//     res.render('home',{products})
-// });
 
 cartsRouter.get("/", async (req, res) => {
     try{
@@ -42,11 +37,11 @@ cartsRouter.get("/:id",async (req, res) => {
 
 cartsRouter.post("/",async (req, res) => {
     try {
-        const element = req.body;
-        const cart = await cartsManager.create(element);
+     
+        const cart = await cartsManager.save();
         if(cart){
 
-            res.send("Se ha creado el carrito!");
+            res.send(`Se ha creado el carrito!: `+cart._id);
         }
        
     } catch (error) {
@@ -86,10 +81,7 @@ cartsRouter.put("/:id",async (req, res) => {
     }
 });
 
-// productsRouter.get("/realtimeproducts", async (req, res) => {
 
-//     res.render('realTimeProducts')
-// });
 
 
 export default cartsRouter;
