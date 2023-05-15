@@ -2,7 +2,7 @@
     <h1>Products</h1>
     <div class="box" id="products" >
         {{#each products}}
-        <div class="product" >
+        <div class="product" id="product-{{this._id}}">
             <p>Title:</p>
             <p class="title">{{this.title}}</p>
             <img class="image" src="{{this.thumbnails.[0]}}"></img>

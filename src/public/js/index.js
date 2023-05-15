@@ -2,7 +2,7 @@ const socket = io();
 
 
  function generateProduct(product) {
-    return  `<div class="product" id=${"product-"+product.id}>
+    return  `<div class="product" id=${"product-"+product._id}>
     <p>id:</p>
     <p class="id">${product._id}</p>
     <p>Title:</p>
@@ -42,7 +42,7 @@ socket.on("SEND_PRODUCTS", async (response) => {
     const code = document.getElementById("code").value;
     const category = document.getElementById("category").value;
     const stock = document.getElementById("stock").value;
-    const status = document.getElementById("status").value;
+    const status = document.getElementById("status").checked;
     
     const prod = {
         title,

@@ -51,14 +51,14 @@ socketServer.on('connection',async (socket) =>{
 
     socket.on("PRODUCT_ADDED",async(obj)=>{
         obj.thumbnails= [obj.thumbnails];
-       await productsManager.save(obj)
-        socketServer.sockets.emit("ADD_PRODUCT",obj)
+       const resultSave = await productsManager.save(obj)
+         socketServer.sockets.emit("ADD_PRODUCT",resultSave)
       })
 
       socket.on("PRODUCT_DELETE",async(id)=>{
-       const idProduct = parseInt(id)
-        await fileManager.delete(idProduct);
-        socketServer.sockets.emit("PRODUCT_DELETED",idProduct)
+        console.log("entro al delete"+id)
+        await productsManager.delete(id);
+        socketServer.sockets.emit("PRODUCT_DELETED",id)
       })
 
 
