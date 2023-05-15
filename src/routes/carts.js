@@ -57,6 +57,7 @@ cartsRouter.post("/:id/products/:idprod",async (req, res) => {
         const id = req.params.id
         const cart = await cartsManager.addProductToCart(id,idProd);
         if(cart){
+            console.log(cart)
             res.send(`Se agrego el producto ${idProd} al carrito ${id}`);
         }
        
