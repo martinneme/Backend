@@ -23,7 +23,7 @@ const carts = await cartsManager.getAll();
 cartsRouter.get("/:id",async (req, res) => {
     try {
         const id = req.params.id
-        const cart = await cartsManager.findCartById(id);
+        const cart = await cartsManager.findElementById(id);
         res.json({status:'success', payload: cart});
              
     } catch (error) {
@@ -74,6 +74,39 @@ cartsRouter.put("/:id",async (req, res) => {
         const id = req.params.id
         const cart = await cartsManager.update(id,element);
         res.json({status:'success', payload: cart});
+             
+    } catch (error) {
+        res.status(400).json({
+            error: error
+        });
+    }
+});
+
+
+cartsRouter.delete("/:id",async (req, res) => {
+    try {
+        const id = req.params.id
+        const cart = await cartsManager.delete(id);
+        res.json({status:'success', payload: cart});
+             
+    } catch (error) {
+        res.status(400).json({
+            error: error
+        });
+    }
+});
+
+cartsRouter.delete("/:id/product/:pid",async (req, res) => {
+    try {
+        const id = req.params.id
+        const pid = req.params.pid
+        const cart = await cartsManager.deleteProductByID(id,pid);
+        if(cart !== -1){
+            res.json({status:'success', payload: cart});
+        }else{
+            throw 'No fue posible eliminar el producto del carrito'
+        }
+        
              
     } catch (error) {
         res.status(400).json({

@@ -34,9 +34,20 @@ export default class Carts extends ManagerDb {
         return "Carrito no encontrado";
       };
 
-    findCartById = async (idCart) => {
-        const resultCart = await cartsModel.findById({_id:idCart}).lean()
-        return resultCart
-    }
+      deleteProductByID = async (id,pid) =>{ 
+
+        const cart = await this.model.findById({_id:id})
+        const productIndex = cart.products.findIndex(e => e.pid === pid);
+   
+        if(productIndex !== -1 ){
+            cart.products.splice(productIndex, 1);
+            cart.save();
+            return cart
+        }else{
+            return -1
+        }
+
+
+      }
    
 }

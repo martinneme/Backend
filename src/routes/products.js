@@ -17,15 +17,16 @@ productsRouter.get("/", async (req, res) => {
     res.render('home',{products})
 });
 
-// productsRouter.get("/", async (req, res) => {
-//     try{
-// const products = await productsManager.getAll();
-//     res.send({status:'success',payload:products})
-//     }catch(error){
-//         res.status(400).send({status:'error',error})
-//     }
+productsRouter.get("/:id", async (req, res) => {
+    try{
+        const id = req.params.id
+const products = await productsManager.findElementById(id);
+    res.send({status:'success',payload:products})
+    }catch(error){
+        res.status(400).send({status:'error',error})
+    }
     
-// });
+});
 
 
 productsRouter.post("/", addProductValidator, async (req, res) => {
@@ -48,6 +49,19 @@ productsRouter.put("/:id",async (req, res) => {
         const element = req.body;
         const id = req.params.id
         const products = await productsManager.update(id,element);
+        res.json({status:'success', payload: products});
+             
+    } catch (error) {
+        res.status(400).json({
+            error: error
+        });
+    }
+});
+
+productsRouter.delete("/:id",async (req, res) => {
+    try {
+        const id = req.params.id
+        const products = await productsManager.delete(id);
         res.json({status:'success', payload: products});
              
     } catch (error) {

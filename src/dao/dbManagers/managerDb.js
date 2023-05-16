@@ -25,4 +25,9 @@ export default class ManagerDb {
         return resultDelete;
     }
 
+    findElementById = async (id) => {
+        const resultCart = await this.model.findById({_id:id}).lean()
+        return resultCart
+    }
+
 }
