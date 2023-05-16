@@ -17,7 +17,7 @@ productsRouter.get("/", async (req, res) => {
     res.render('home',{products})
 });
 
-productsRouter.get("/:id", async (req, res) => {
+productsRouter.get("/product/:id", async (req, res) => {
     try{
         const id = req.params.id
 const products = await productsManager.findElementById(id);

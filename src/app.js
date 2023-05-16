@@ -56,7 +56,6 @@ socketServer.on('connection',async (socket) =>{
       })
 
       socket.on("PRODUCT_DELETE",async(id)=>{
-        console.log("entro al delete"+id)
         await productsManager.delete(id);
         socketServer.sockets.emit("PRODUCT_DELETED",id)
       })
