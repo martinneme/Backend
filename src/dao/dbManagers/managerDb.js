@@ -9,8 +9,6 @@ export default class ManagerDb {
             return resultAll;
         }
 
-        
-    
 
     save = async (ele) => {
         const resultAdd = await this.model.create(ele);

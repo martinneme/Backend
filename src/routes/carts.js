@@ -57,7 +57,6 @@ cartsRouter.post("/:id/products/:idprod",async (req, res) => {
         const id = req.params.id
         const cart = await cartsManager.addProductToCart(id,idProd);
         if(cart){
-            console.log(cart)
             res.send(`Se agrego el producto ${idProd} al carrito ${id}`);
         }
        
@@ -83,10 +82,28 @@ cartsRouter.put("/:id",async (req, res) => {
 });
 
 
+cartsRouter.put("/:id/products/:idprod",async (req, res) => {
+    try {
+        const idProd = req.params.idprod;
+        const id = req.params.id
+        const quantity = req.body.quantity;
+        const cart = await cartsManager.updateQuantityProdInCart(id,idProd,quantity);
+        if(cart){
+            res.send(`Se actualizo el producto ${idProd} a la cantidad ${quantity}`);
+        }
+       
+    } catch (error) {
+        res.status(400).json({
+            error: error
+        });
+    }
+});
+
+
 cartsRouter.delete("/:id",async (req, res) => {
     try {
         const id = req.params.id
-        const cart = await cartsManager.delete(id);
+        const cart = await cartsManager.clearCart(id);
         res.json({status:'success', payload: cart});
              
     } catch (error) {
@@ -98,7 +115,7 @@ cartsRouter.delete("/:id",async (req, res) => {
 
 cartsRouter.delete("/:id/product/:pid",async (req, res) => {
     try {
-        const id = req.params.id
+        const id = req.params.id    
         const pid = req.params.pid
         const cart = await cartsManager.deleteProductByID(id,pid);
         if(cart !== -1){
