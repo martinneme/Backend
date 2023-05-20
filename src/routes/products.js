@@ -12,8 +12,24 @@ const productsManager = new Products();
 
 
 productsRouter.get("/", async (req, res) => {
-    const products = await productsManager.getAll() ;
+const {limit, page,sort,title,price,category,status} = req.query;
+const query = {}
 
+if(title){
+    query.title = title;
+}
+if(price){
+    query.price = parseInt(price);
+}
+if(category){
+    query.category = category;
+}
+if(status){
+    query.status = status;
+}
+
+    
+    const products = await productsManager.getAll(limit,page,query,sort) ;
     res.render('home',{products})
 });
 

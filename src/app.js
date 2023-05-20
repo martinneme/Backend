@@ -68,7 +68,8 @@ socketServer.sockets.emit("ADD_MESSAGE_CHAT",message)
       })
 })
 
+const PORT = process.env.PORT || 8080;
 
-httpServer.listen(8080,()=>{
+httpServer.listen(PORT,()=>{
     console.log("Express Server listening on PORT 8080")
 })  

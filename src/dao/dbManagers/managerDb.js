@@ -4,10 +4,12 @@ export default class ManagerDb {
         this.model = modelManager;
     }
 
-    getAll = async () =>{
-        const products = await this.model.find().lean();
-        return products;
-    }
+        getAll = async () =>{
+            const resultAll = await this.model.find().lean();
+            return resultAll;
+        }
+
+        
     
 
     save = async (ele) => {
