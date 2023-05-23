@@ -338,3 +338,16 @@
     width: 35%;
    margin-left: 20%;
   }
+
+  .deleteBtn {
+    background-color: #ff0000; /* Color de fondo del botón */
+    color: #ffffff; /* Color del texto del botón */
+    border: none; /* Sin borde */
+    padding: 8px 16px; /* Espaciado interno (vertical, horizontal) */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar por encima del botón */
+  }
+  
+  .deleteBtn:hover {
+    background-color: #cc0000; /* Color de fondo cuando se pasa por encima */
+  }

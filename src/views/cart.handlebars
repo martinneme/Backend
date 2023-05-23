@@ -1,6 +1,8 @@
 <div>
     <h1>Cart</h1>
-    <div></div>
+    <div>
+      <button class="deleteBtn" onclick="deleteCart()">Clear Cart</button>
+    </div>
     <div class="cartView">
        <table >
   <tr>
@@ -9,9 +11,10 @@
     <th class="titleTable">Price</th>
     <th class="titleTable">description</th>
     <th class="titleTable">Quantity</th>
+    <th class="titleTable"> Delete</th>
   </tr>
 </table>
-        <ul class="cards">
+        <ul class="cards" id="cards">
         {{#each cart.products}}
     
             <li class="productCart">
@@ -30,6 +33,10 @@
             <div class="titleTable">
             {{this.quantity}}
            </div>
+            <div >
+            <button class="deleteBtn" onclick="deleteItemCart(this)">X</button>
+           <div hidden id="idItem">{{this.product._id}}</div>
+           </div> 
            </li>
        
         {{/each}}

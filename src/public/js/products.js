@@ -1,15 +1,18 @@
-let isCartExist = localStorage.getItem('cartId') || null;
+    let isCartExist = localStorage.getItem('cartId') || null;
 
 const badge = document.getElementById('quantityBadge')
 
 
 window.addEventListener('load', async () => {
+    let counter = 0 ;
     isCartExist = localStorage.getItem('cartId') || null;
     if (isCartExist) {
         const cart = await getCart(isCartExist)
         if (cart) {
-            const quantitySet = await cart.products.length
-            badge.textContent = quantitySet;
+            cart.products.forEach(element => {
+                counter += parseInt(element.quantity);
+            });
+            badge.textContent = counter;
         } else {
             localStorage.removeItem('cartId');
         }
@@ -28,7 +31,6 @@ function goToCart() {
             window.location.href = '/carts/' + isCartExist;
         }
     } else {
-        console.log("empty")
         alert("Cart is empty")
     }
 
@@ -48,13 +50,11 @@ function increment(element) {
 }
 
 async function addToCart(element) {
+    
     const product = element.closest(".product");
     const quantityValue = product.querySelector("#quantityValue");
     const pid = product.querySelector("#idProd").textContent;
     const quantity = parseInt(quantityValue.textContent);
-
-
-
 
     isCartExist = localStorage.getItem('cartId') || null;
 
@@ -64,7 +64,7 @@ async function addToCart(element) {
         localStorage.setItem('cartId', newCart.payload);
         badge.textContent = parseInt(badge.textContent) + quantity;
        await AddToCartDB(newCart.payload, pid,quantity);
-
+isCartExist=newCart.payload;
 
     } else {
         const updateQuantity = await updateQuantityProd(isCartExist, pid, quantity);
@@ -73,6 +73,7 @@ async function addToCart(element) {
        
         } 
      badge.textContent = parseInt(badge.textContent) + quantity;
+
     }
 
 

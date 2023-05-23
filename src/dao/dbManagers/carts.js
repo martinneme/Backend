@@ -53,35 +53,36 @@ export default class Carts extends ManagerDb {
           return 0;
         }
 
-       
-   
           
      
       };
 
 
       clearCart = async (idCart) => {
-        await this.model.findByIdAndUpdate(
+        const updatedCart =  await this.model.findByIdAndUpdate(
           idCart,
           { $set: { "products": [] } },
           
         );
-
-        return 'Se ha vaciado el carrito'
+        if (updatedCart) {
+          return 1;
+        }else{
+          return 0;
+        }
 
       }
 
 
 
-      deleteProductByID = async (id,pid) =>{ 
+      deleteProductByID = async (idCart,pid) =>{ 
 
-        const cart = await this.model.findById({_id:id})
-        const productIndex = cart.products.findIndex(e => e.pid === pid);
-   
-        if(productIndex !== -1 ){
-            cart.products.splice(productIndex, 1);
-            cart.save();
-            return cart
+        const updatedCart = await this.model.updateOne(
+          { _id: idCart },
+          { $pull: { products: { product: pid } } }
+        );
+        if(updatedCart.acknowledged){
+           
+            return 1
         }else{
             return -1
         }
