@@ -1,18 +1,36 @@
 <div>
     <h1>Products</h1>
+    <div name="cart" class="boxCart">
+        <button class="butttonCart" onclick="goToCart()">  
+ <img class="iconCart" src="https://cdn.icon-icons.com/icons2/1863/PNG/512/shopping-cart_118662.png">
+    <span class="cart-badge" id="quantityBadge">0</span>
+        </button>
+       
+    </div>
     <div class="box">
-        {{#each products}}
+        {{#each products.products}}
         <div class="product">
+            <p style="display:none;" id="idProd">{{this._id}}</p>
             <p>Title:</p>
             <p class="title">{{this.title}}</p>
             <img class="image" src="{{this.thumbnails.[0]}}"></img>
-            <p>description:</p>
+            <p>Description:</p>
             <p class="description">{{this.description}}</p>
-            <p>Price:</p>
-            <p class="price">{{this.price}}</p>
-            <p>Stock:</p>
-            <p class="stock">{{this.stock}}</p>
+            <p class="price">${{this.price}}</p>
+            <p class="stock">Stock:{{this.stock}}</p>
+            <div id="cartButtons">
+<button id="reduceQuantity" onclick="reduce(this)">-</button>
+<p id="quantityValue">1</p>
+<button id="incrementQuantity" onclick="increment(this)">+</button>
+            </div>
+<div class="cartButtonBox"><button id="addToCart" onclick="addToCart(this)">Add to cart</button></div>
         </div>
         {{/each}}
     </div>
+      <nav name="paginado">
+        <div id="back" ><button onclick="navigateTo('{{products.pagination.prevPage}}')">Back</button></div>
+        <div name="pageBox" class="pageBox"><p id="page">{{products.pagination.page}}</p></div>
+        <div id="next" ><button onclick="navigateTo('{{products.pagination.nextPage}}')">Next</button></div>
+    </nav>
 </div>
+<script src="/js/products.js"></script>

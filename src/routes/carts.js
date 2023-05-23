@@ -10,21 +10,30 @@ const cartsRouter = Router();
 const cartsManager = new Carts();
 
 
-cartsRouter.get("/", async (req, res) => {
-    try{
-const carts = await cartsManager.getAll();
-    res.send({status:'success',payload:carts})
-    }catch(error){
-        res.status(400).send({status:'error',error})
-    }
+// cartsRouter.get("/", async (req, res) => {
+//     try{
+// const carts = await cartsManager.getAll();
+
+// // res.json(carts)
+// }catch(error){
+//         res.status(400).json({
+//             error: error
+//         });
+//     }
     
-});
+// });
 
 cartsRouter.get("/:id",async (req, res) => {
     try {
+        const contentType = req.headers['content-type'];
         const id = req.params.id
         const cart = await cartsManager.findElementById(id);
-        res.json({status:'success', payload: cart});
+        if (contentType === 'application/json') { 
+        res.json(cart)
+        }else{
+          res.render('cart', {cart})  
+        }
+        
              
     } catch (error) {
         res.status(400).json({
@@ -41,7 +50,7 @@ cartsRouter.post("/",async (req, res) => {
         const cart = await cartsManager.save();
         if(cart){
 
-            res.send(`Se ha creado el carrito!: `+cart._id);
+            res.json({status:'success', payload: cart._id});
         }
        
     } catch (error) {
@@ -55,9 +64,11 @@ cartsRouter.post("/:id/products/:idprod",async (req, res) => {
     try {
         const idProd = req.params.idprod;
         const id = req.params.id
-        const cart = await cartsManager.addProductToCart(id,idProd);
+        const quantity = req.body.quantity
+        
+        const cart = await cartsManager.addProductToCart(id,idProd,quantity);
         if(cart){
-            res.send(`Se agrego el producto ${idProd} al carrito ${id}`);
+            res.json({status:'success', payload: cart});
         }
        
     } catch (error) {
@@ -89,7 +100,12 @@ cartsRouter.put("/:id/products/:idprod",async (req, res) => {
         const quantity = req.body.quantity;
         const cart = await cartsManager.updateQuantityProdInCart(id,idProd,quantity);
         if(cart){
-            res.send(`Se actualizo el producto ${idProd} a la cantidad ${quantity}`);
+            res.json({
+                status:'success'})
+        }else{
+            res.status(400).json({
+                status:'failed'
+            });
         }
        
     } catch (error) {

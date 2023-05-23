@@ -26,7 +26,7 @@ export default class ManagerDb {
     }
 
     findElementById = async (id) => {
-        const resultCart = await this.model.findById({_id:id}).lean()
+        const resultCart = await this.model.findById({_id:id}).populate('products.product').lean();
         return resultCart
     }
 

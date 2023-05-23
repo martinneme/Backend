@@ -18,17 +18,8 @@ export default class Carts extends ManagerDb {
     }
 
 
-    addProductToCart = async (idCart, idProd) => {
-      const rs = await this.model.findOneAndUpdate(
-        { _id: idCart, "products.product": idProd },
-        { $inc: { "products.$.quantity": 1 } },
-        { new: true }
-      );
-    
-      if (rs) {
-        return 2; 
-      } else {
-        const prod = { product: idProd, quantity: 1 };
+    addProductToCart = async (idCart, idProd,quantity) => {
+        const prod = { product: idProd, quantity: quantity };
         const updatedCart = await this.model.findByIdAndUpdate(
           idCart,
           { $push: { products: prod } },
@@ -40,35 +31,32 @@ export default class Carts extends ManagerDb {
         } else {
           return 0; 
         }
-      }
+      
     };
 
       updateQuantityProdInCart = async (idCart, pid,quantity) => {
        
-        const cart = await this.model.findById(idCart);
+        const cart = await this.model.findOne({
+          _id: idCart,
+          "products.product": pid
+        });
+
+        if(cart){
+           const update = { $inc: { "products.$[elem].quantity": quantity } };
+        const options = { arrayFilters: [{ "elem.product": pid }] };
       
-        if (cart) {
-          const productIndex = cart.products.findIndex(e => e.pid === pid);
-      
-          if (productIndex !== -1) {
-                await this.model.findByIdAndUpdate(
-                idCart,
-                { $set: { "products.$[elem].quantity": quantity } },
-                {
-                  arrayFilters: [{ "elem.pid": pid }]
-               
-                }
-              );
-              return "quantity actualizada"
-          } else {
-            const prod = { pid: pid, quantity: 1 };
-            cart.products.push(prod);
-            await cart.save();
-            return "Producto agregado";
-          }
+        const updatedCart = await this.model.findByIdAndUpdate(idCart, update, options);
+        if (updatedCart) {
+          return 1;
         }
-      
-        return "Carrito no encontrado";
+        }else{
+          return 0;
+        }
+
+       
+   
+          
+     
       };
 
 

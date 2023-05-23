@@ -6,6 +6,8 @@
       margin-bottom: 2rem;
   }
 
+
+
   .box {
       display: flex;
       flex-wrap: wrap;
@@ -191,3 +193,148 @@
       color: #000;
     }
     
+
+    nav[name="paginado"] {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 10px;
+     
+    }
+    
+    #back button,
+    #next button {
+      background-color: #eaeaea;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    
+    #back button:hover,
+    #next button:hover {
+      background-color: #ccc;
+    }
+    
+    .pageBox {
+      margin: 0 10px;
+  
+    }
+    
+    #page {
+      font-size: 16px;
+    }
+
+    #cartButtons {
+      display: flex;
+      align-items: center;
+      margin: auto;
+    }
+    
+    #reduceQuantity,
+    #incrementQuantity {
+      color: #333;
+    }
+
+    #reduceQuantity,
+    #incrementQuantity {
+      color: #333;
+    }
+    
+    #addToCart {
+      margin-top: 10px;
+      background-color: #55c57a;
+      color: #fff;
+      border: none;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 5%;
+    }
+
+    .boxCart{
+      position: absolute;
+      top:10px
+      
+    }
+
+    .iconCart{
+      width: 30px;
+    }
+
+
+    .boxCart{
+      border: #000;
+      width: 90%;
+      margin: auto;
+    }
+
+    .cards{
+      width: 95%;
+      
+    }
+
+
+    li{
+      list-style-type: none;
+    }
+
+    .cartView {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cards {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+  }
+  
+  .productCart {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+      padding: 10px 0;
+  }
+  
+  .productCart div {
+      flex: 1;
+  }
+  
+  .productCart div:not(:last-child) {
+      margin-right: 10px;
+  }
+  
+  .productCart .title {
+      font-weight: bold;
+      font-size: 18px;
+      color: #333;
+  }
+  
+  .productCart .price {
+      color: #666;
+  }
+  
+  .productCart .description {
+      color: #999;
+      font-style: italic;
+  }
+  
+  .productCart .quantity {
+      color: #666;
+  }
+
+  .titleTable{
+    margin-left: 10%;
+  }
+
+  table{
+    width: 90%;
+  }
+
+
+  .imageCart{
+    width: 35%;
+   margin-left: 20%;
+  }

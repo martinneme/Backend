@@ -1,0 +1,42 @@
+<div>
+    <h1>Cart</h1>
+    <div></div>
+    <div class="cartView">
+       <table >
+  <tr>
+    <th  class="titleTable">Product</th>
+    <th  class="titleTable">Title</th>
+    <th class="titleTable">Price</th>
+    <th class="titleTable">description</th>
+    <th class="titleTable">Quantity</th>
+  </tr>
+</table>
+        <ul class="cards">
+        {{#each cart.products}}
+    
+            <li class="productCart">
+                 <div>
+           <img class="imageCart" src="{{this.product.thumbnails.[0]}}"></img>
+           </div>
+            <div>
+            {{this.product.title}}
+           </div>
+            <div>
+            ${{this.product.price}}
+           </div>
+            <div>
+            {{this.product.description}}
+           </div>
+            <div class="titleTable">
+            {{this.quantity}}
+           </div>
+           </li>
+       
+        {{/each}}
+        </ul>
+    </div>
+    <nav name="paginado">
+        <div id="back" ><button onclick="navigateTo(/products/)">Back</button></div>
+    </nav>
+</div>
+<script src="/js/cart.js"></script>

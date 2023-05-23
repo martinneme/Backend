@@ -28,6 +28,7 @@ app.use(express.static(`${__dirname}/public`));
 app.use('/products/realtimeproducts',express.static(`${__dirname}/public`));
 app.use('/products/',express.static(`${__dirname}/public`));
 app.use('/chats',express.static(`${__dirname}/public`));
+app.use('/carts/',express.static(`${__dirname}/public`));
 
 app.engine('handlebars',handlebars.engine());
 app.set('views',`${__dirname}/views` ); 
