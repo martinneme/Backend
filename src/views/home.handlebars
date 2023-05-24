@@ -2,7 +2,6 @@
     <div class="TitleProds">
          <h2 class="titleSection">PRODUCTS</h2>   
     </div>
-
     <div name="cart" class="boxCart">
         <button class="butttonCart" onclick="goToCart()">  
  <img class="iconCart" src="https://cdn.icon-icons.com/icons2/1863/PNG/512/shopping-cart_118662.png">
@@ -12,20 +11,26 @@
     </div>
     <div class="box">
         {{#each products.products}}
-        <div class="product">
+        <div class="product" id="product">
             <div class="cardHead"></div>
             <p class="title">{{this.title}}</p>
             <p style="display:none;" id="idProd">{{this._id}}</p>
-            <img class="image" src="{{this.thumbnails.[0]}}"></img>
+            <img  class="image" src="{{this.thumbnails.[0]}}"></img>
             <p class="description">{{this.description}}</p>
             <p class="price">${{this.price}}</p>
-            <p class="stock">Stock:{{this.stock}}</p>
-            <div id="cartButtons">
+             {{#if this.stock}}
+            <p>Available</p>
+            <div id="cartButtons" >
 <button id="reduceQuantity" onclick="reduce(this)">-</button>
 <p id="quantityValue">1</p>
 <button id="incrementQuantity" onclick="increment(this)">+</button>
             </div>
-<div class="cartButtonBox"><button id="addToCart" onclick="addToCart(this)">Add to cart</button></div>
+<div class="cartButtonBox"><button id="addToCart" onclick="addToCart(this)" >Add to cart</button></div>
+        {{else}}
+                      <div>
+                       <button class="notAvailable" >Not available</button>
+                      </div>
+        {{/if}}
                     <div class="cardfooter"></div>
 
         </div>

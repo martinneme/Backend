@@ -251,11 +251,17 @@
       margin-bottom: 5%;
     }
 
-    .boxCart{
-      position: absolute;
-      top:10px
-      
+    #addToCart:hover {
+      margin-top: 10px;
+      background-color: #3b413d;
+      color: #fff;
+      border: none;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 5%;
     }
+
+   
 
     .iconCart{
       width: 30px;
@@ -263,9 +269,10 @@
 
 
     .boxCart{
-      border: #000;
-      width: 90%;
-      margin: auto;
+      background-color: gainsboro;
+      width: 100%;
+      position: absolute;
+      top:10px;
     }
 
     .cards{
@@ -380,4 +387,17 @@ margin: auto;
     color: #ab63d4;
     
 
+  }
+
+
+
+  .notAvailable{
+    margin-top: 10px;
+    background-color: #f54949;
+    color: #fff;
+    border: none;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 30%;
+  
   }
