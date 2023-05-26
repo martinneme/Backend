@@ -12,6 +12,10 @@
   <p id="usernameProfile">Username: {{products.user.name}}</p>
   <p id="emailProfile">Email: {{products.user.email}}</p>
   <p id="adminProfile">Admin: {{products.user.isAdmin}}</p>
+  {{#if products.user.isAdmin}}
+<button id="logout"  ><a href="/">Profile</a></button>
+  {{/if}}
+<button id="logout" onclick="logout()" >Logout</button>
 </div>
     </div>
     <div class="box">

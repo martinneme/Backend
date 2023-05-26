@@ -36,6 +36,7 @@ function goToCart() {
 
 }
 
+
 function reduce(element) {
     const quantity = element.parentNode.querySelector('#quantityValue');
     const currentValue = parseInt(quantity.textContent);
@@ -90,6 +91,24 @@ const getCart = async (id) => {
     const response = await rs.json();
 
     return response
+
+}
+
+const logout =  async () => {
+    const rs = await fetch(`/api/logout`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    const response = await rs.json();
+    if(response.logout){
+        console.log(response)
+        window.location.href='/'
+    }else{
+        console.log(response)
+    }
 
 }
 

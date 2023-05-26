@@ -60,15 +60,24 @@ sessionsRouter.post("/login", async (req, res) => {
   } catch (error) {console.log(error)}
 });
 
-sessionsRouter.get("/logout", (req, res) => {
-    req.session.destroy(error=>{
-        if(error) return res.status(500).send({
-            status:"Error",
-            error:"logout failed"
-        })
-    })
+sessionsRouter.get("/logout", async (req, res) => {
+  let result;
+  await req.session.destroy((err) => {
+    if (err) {
+      console.log("Error al destruir la sesión:", err);
+      return res.status(400).send({
+        status: "Error",
+        logout: false
+      });
+    } else {
+      console.log("Sesión destruida correctamente");
+      return res.send({
+        status: "Success",
+        logout: true
+      })
+    }});
 
-    res.redirect('/login')
-});
+return  result
+  });
 
 export default sessionsRouter;

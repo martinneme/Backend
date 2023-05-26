@@ -42,6 +42,7 @@ app.use('/carts/',express.static(`${__dirname}/public`));
 app.use(session({
   store:MongoStore.create({
     client:mongoose.connection.getClient(),
+    collectionName: 'sessions', 
     ttl:1000
   }),
   secret:'Mn-C0DERHOUSE',
