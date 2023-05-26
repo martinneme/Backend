@@ -4,7 +4,6 @@ import ManagerDb from "./managerDb.js";
 
 export default class Carts extends ManagerDb {
     constructor(){
-        console.log("working products with database");
         super(cartsModel)
     }
 

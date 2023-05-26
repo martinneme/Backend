@@ -1,6 +1,6 @@
 export default class ManagerDb {
     constructor(modelManager){
-        console.log("working products with database")
+        console.log("working with MongoDB")
         this.model = modelManager;
     }
 
@@ -12,6 +12,7 @@ export default class ManagerDb {
 
     save = async (ele) => {
         const resultAdd = await this.model.create(ele);
+        console.log(resultAdd)
         return resultAdd;
     }
 

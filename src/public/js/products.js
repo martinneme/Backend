@@ -136,12 +136,3 @@ const AddToCartDB = async (cid, pid,quantity) => {
 }   
 
 
-// const enableButtonAddToCart = (element) => {
-//     let product = element.parentNode.getElementById('#product');
-//     let addToCart = product.querySelector("#addToCart");
-//     let cartButtons = product.querySelector("#cartButtons")
-
-//     addToCart.removeAttribute("style");
-//     cartButtons.removeAttribute("style");
-
-// }

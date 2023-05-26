@@ -2,6 +2,8 @@ import express from 'express';
 import productsRouter from './routes/products.js'
 import cartsRouter from './routes/carts.js';
 import messagesRouter from './routes/messages.js'
+import sessionsRouter from './routes/sessions.js';
+import sessionViewsRouter from './routes/sessionsViews.js';
 import handlebars  from 'express-handlebars';
 import __dirname from './utils.js';
 import {Server as HTTPServer} from 'http'
@@ -10,6 +12,8 @@ import FileManager from './dao/fileManagers/FileManager.js';
 import Products from './dao/dbManagers/products.js';
 import Messages from './dao/dbManagers/messages.js';
 import mongoose from 'mongoose';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
 
 
 
@@ -22,6 +26,12 @@ const httpServer = new HTTPServer(app);
 export const socketServer = new SocketServer(httpServer);
 export  const io = socketServer; 
 
+try{
+  await mongoose.connect('mongodb+srv://mnmongodb:dbpass07@dbmongoazure.nrqqfgp.mongodb.net/ecommerce')
+  }catch(error){
+  console.log("error conecction db");
+  }
+
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(express.static(`${__dirname}/public`));
@@ -29,6 +39,15 @@ app.use('/products/realtimeproducts',express.static(`${__dirname}/public`));
 app.use('/products/',express.static(`${__dirname}/public`));
 app.use('/chats',express.static(`${__dirname}/public`));
 app.use('/carts/',express.static(`${__dirname}/public`));
+app.use(session({
+  store:MongoStore.create({
+    client:mongoose.connection.getClient(),
+    ttl:1000
+  }),
+  secret:'Mn-C0DERHOUSE',
+resave:true,
+saveUninitialized:true
+}))
 
 app.engine('handlebars',handlebars.engine());
 app.set('views',`${__dirname}/views` ); 
@@ -37,13 +56,11 @@ app.set('view engine',`handlebars` );
 app.use('/products',productsRouter)
 app.use('/carts',cartsRouter)
 app.use('/chat',messagesRouter)
+app.use('/api',sessionsRouter)
+app.use('/',sessionViewsRouter)
 
 
-try{
-await mongoose.connect('mongodb+srv://mnmongodb:dbpass07@dbmongoazure.nrqqfgp.mongodb.net/ecommerce')
-}catch(error){
-console.log("error conecction db");
-}
+
 
 socketServer.on('connection',async (socket) =>{
     console.log("socket conectado");

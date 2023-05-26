@@ -1,13 +1,18 @@
 <div>
     <div class="TitleProds">
          <h2 class="titleSection">PRODUCTS</h2>   
+
     </div>
     <div name="cart" class="boxCart">
         <button class="butttonCart" onclick="goToCart()">  
  <img class="iconCart" src="https://cdn.icon-icons.com/icons2/1863/PNG/512/shopping-cart_118662.png">
     <span class="cart-badge" id="quantityBadge">0</span>
         </button>
-       
+          <div id="user-profile" class="panelUser">
+  <p id="usernameProfile">Username: {{products.user.name}}</p>
+  <p id="emailProfile">Email: {{products.user.email}}</p>
+  <p id="adminProfile">Admin: {{products.user.isAdmin}}</p>
+</div>
     </div>
     <div class="box">
         {{#each products.products}}
