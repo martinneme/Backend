@@ -1,17 +1,18 @@
 export default class ManagerDb {
     constructor(modelManager){
-        console.log("working products with database")
+        console.log("working with MongoDB")
         this.model = modelManager;
     }
 
-    getAll = async () =>{
-        const products = await this.model.find().lean();
-        return products;
-    }
-    
+        getAll = async () =>{
+            const resultAll = await this.model.find().lean();
+            return resultAll;
+        }
+
 
     save = async (ele) => {
         const resultAdd = await this.model.create(ele);
+        console.log(resultAdd)
         return resultAdd;
     }
 
@@ -26,7 +27,7 @@ export default class ManagerDb {
     }
 
     findElementById = async (id) => {
-        const resultCart = await this.model.findById({_id:id}).lean()
+        const resultCart = await this.model.findById({_id:id}).populate('products.product').lean();
         return resultCart
     }
 

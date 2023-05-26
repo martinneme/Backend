@@ -14,15 +14,6 @@ messagesRouter.get("/", async (req, res) => {
     res.render('chat',{messages})
 });
 
-// messagesRouter.get("/", async (req, res) => {
-//     try{
-// const messages = await messagesManager.getAll();
-//     res.send({status:'success',payload:messages})
-//     }catch(error){
-//         res.status(400).send({status:'error',error})
-//     }
-    
-// });
 
 
 messagesRouter.post("/", async (req, res) => {

@@ -1,48 +1,87 @@
 import { cartsModel } from "../models/carts.js";
 import ManagerDb from "./managerDb.js";
 
+
 export default class Carts extends ManagerDb {
     constructor(){
-        console.log("working products with database");
         super(cartsModel)
     }
 
-    addProductToCart = async (idCart, pid) => {
-        const cart = await cartsModel.findById(idCart);
-      
-        if (cart) {
-          const productIndex = cart.products.findIndex(e => e.pid === pid);
-      
-          if (productIndex !== -1) {
-                await cartsModel.findByIdAndUpdate(
-                idCart,
-                { $inc: { "products.$[elem].quantity": 1 } },
-                {
-                  arrayFilters: [{ "elem.pid": pid }]
-               
-                }
-              );
-              return "Producto incrementado"
-          } else {
-            const prod = { pid: pid, quantity: 1 };
-            cart.products.push(prod);
-            await cart.save();
-            return "Producto agregado";
-          }
+    save = async () => {
+      return this.model.create({})
+    }
+
+    getAll = async () => {
+      const resultAll = await this.model.find().populate('products.product').lean();
+    return resultAll
+    }
+
+
+    addProductToCart = async (idCart, idProd,quantity) => {
+        const prod = { product: idProd, quantity: quantity };
+        const updatedCart = await this.model.findByIdAndUpdate(
+          idCart,
+          { $push: { products: prod } },
+          { new: true }
+        );
+    
+        if (updatedCart) {
+          return 1; 
+        } else {
+          return 0; 
         }
       
-        return "Carrito no encontrado";
+    };
+
+      updateQuantityProdInCart = async (idCart, pid,quantity) => {
+       
+        const cart = await this.model.findOne({
+          _id: idCart,
+          "products.product": pid
+        });
+
+        if(cart){
+           const update = { $inc: { "products.$[elem].quantity": quantity } };
+        const options = { arrayFilters: [{ "elem.product": pid }] };
+      
+        const updatedCart = await this.model.findByIdAndUpdate(idCart, update, options);
+        if (updatedCart) {
+          return 1;
+        }
+        }else{
+          return 0;
+        }
+
+          
+     
       };
 
-      deleteProductByID = async (id,pid) =>{ 
 
-        const cart = await this.model.findById({_id:id})
-        const productIndex = cart.products.findIndex(e => e.pid === pid);
-   
-        if(productIndex !== -1 ){
-            cart.products.splice(productIndex, 1);
-            cart.save();
-            return cart
+      clearCart = async (idCart) => {
+        const updatedCart =  await this.model.findByIdAndUpdate(
+          idCart,
+          { $set: { "products": [] } },
+          
+        );
+        if (updatedCart) {
+          return 1;
+        }else{
+          return 0;
+        }
+
+      }
+
+
+
+      deleteProductByID = async (idCart,pid) =>{ 
+
+        const updatedCart = await this.model.updateOne(
+          { _id: idCart },
+          { $pull: { products: { product: pid } } }
+        );
+        if(updatedCart.acknowledged){
+           
+            return 1
         }else{
             return -1
         }

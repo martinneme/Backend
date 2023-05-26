@@ -4,6 +4,7 @@ import {
 import Products from "../dao/dbManagers/products.js";
 import addProductValidator from "../middlewares/addProductValidator.js";
 import __dirname from '../utils.js';
+import { privateAccess } from "../middlewares/accessValidator.js";
 
 
 const productsRouter = Router();
@@ -11,9 +12,27 @@ const productsRouter = Router();
 const productsManager = new Products();
 
 
-productsRouter.get("/", async (req, res) => {
-    const products = await productsManager.getAll() ;
+productsRouter.get("/",privateAccess, async (req, res) => {
+const {limit, page,sort,title,price,category,status} = req.query;
+const query = {}
 
+if(title){
+    query.title = title;
+}
+if(price){
+    query.price = parseInt(price);
+}
+if(category){
+    query.category = category;
+}
+if(status){
+    query.status = status;
+}
+
+    
+    const products = await productsManager.getAll(limit,page,query,sort) ;
+    const user = req.session.user;
+    products.user = user;
     res.render('home',{products})
 });
 
