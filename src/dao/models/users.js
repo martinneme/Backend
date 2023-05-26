@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 const userscollection = "users";
+import bcrypt from 'bcrypt';
 
 const usersSchema = new mongoose.Schema({
     
@@ -31,6 +32,14 @@ const usersSchema = new mongoose.Schema({
 
 });
 
+export const comparePassword = async (password, hashedPassword) => {
+    try {
+      const match = await bcrypt.compare(password, hashedPassword);
+      return match;
+    } catch (error) {
+      throw new Error('Error al comparar las contraseñas');
+    }
+  };
 
 
 export const usersModel = mongoose.model(userscollection,usersSchema);
