@@ -27,7 +27,7 @@ export default class Users extends ManagerDb{
 
        save = async (user) => {
         try {
-          const hashedPassword = await bcrypt.hash(user.password, 10);
+          const hashedPassword = await bcrypt.hash(user.password, bcrypt.genSaltSync(10));
           const newUser = { ...user, password: hashedPassword };
           // Lógica para guardar el usuario en la base de datos
           this.model.create(newUser)
