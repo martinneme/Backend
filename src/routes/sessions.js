@@ -1,64 +1,56 @@
 import { Router } from "express";
 import Users from "../dao/dbManagers/users.js";
 import __dirname from "../utils.js";
-
+import passport from 'passport';
 const sessionsRouter = Router();
 
 const usersManager = new Users();
 
-sessionsRouter.post("/register", async (req, res) => {
-  try {
-    const { firstName, lastName, email, password } = req.body;
-    
-    const exist = await usersManager.findIfExist(email)
-
-    if (exist)return res.status(400).send({
-        status: "Error",
-        error: "User already exist",
-      });
-
-    const user = {
-      firstName,
-      lastName,
-      email,
-      password
-    };
-
- await usersManager.save(user)
-
-    res.send({
-      status: "Success",
-      message: "User registered",
-    });
-  } catch (error) {
-    console.log(error)
-  }
+sessionsRouter.post("/register", passport.authenticate('register', { failureRedirect: '/' }), async (req, res) => {
+  res.send({ status: 'success', message: 'User registered' })
 });
 
-sessionsRouter.post("/login", async (req, res) => {
-  try {
-    const { email, password } = req.body;
 
-    const user = await usersManager.LoginValidate(email,password);
-    if (!user)
-      return res.status(400).send({
-        status: "Error",
-        autorizated: false
-      });
+sessionsRouter.post("/login",  passport.authenticate('login', { failureRedirect: 'fail-login' }),async (req, res) => {
+  if (!req.user) return res.status(400).send({ status: 'error', error: 'Invalid credentials' });
+
+  let admin = req?.user?.email === 'adminCoder@coder.com' ? true : false;
 
     req.session.user = {
-      name: `${user.firstName} ${user.lastName}`,
-      email: user.email,
-      age: user.age,
-      isAdmin:user.isAdmin
+      name: `${req.user.firstName} ${req.user.lastName}`,
+      email: req.user.email,
+      age: req.user.age,
+      isAdmin:admin
     };
 
     res.send({
         status: "Success",
         autorizated: true
       });
-  } catch (error) {console.log(error)}
+
 });
+
+sessionsRouter.get('/github',passport.authenticate('github',{scope:['user:email']}),async (req,res)=>{
+  res.send({
+    status: "Success",
+    autorizated: true
+  });
+})
+
+sessionsRouter.get('/github-callback',passport.authenticate('github',{failureRedirect:'/login'}),async (req,res)=>{
+  if (!req.user) return res.status(400).send({ status: 'error', error: 'Invalid credentials' });
+  let admin = req?.user?.email === 'adminCoder@coder.com' ? true : false;
+
+  req.session.user = {
+    name: `${req.user.firstName} ${req.user.lastName}`,
+    email: req.user.email,
+    age: req.user.age,
+    isAdmin:admin
+  };
+
+  res.redirect("/products")
+})
+
 
 sessionsRouter.get("/logout", async (req, res) => {
   let result;
@@ -76,6 +68,8 @@ sessionsRouter.get("/logout", async (req, res) => {
         logout: true
       })
     }});
+
+
 
 return  result
   });

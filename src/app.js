@@ -14,7 +14,8 @@ import Messages from './dao/dbManagers/messages.js';
 import mongoose from 'mongoose';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
-
+import passportInit from './config/passport.config.js';
+import passport from 'passport';
 
 
 const fileManager = new FileManager("./db/products.json");
@@ -27,7 +28,7 @@ export const socketServer = new SocketServer(httpServer);
 export  const io = socketServer; 
 
 try{
-  await mongoose.connect('mongodb+srv://mnmongodb:dbpass07@dbmongoazure.nrqqfgp.mongodb.net/ecommerce')
+  await mongoose.connect('mongodb+srv://mnmongodb:dbpass07@dbmongoazure.nrqqfgp.mongodb.net/ecommerce1')
   }catch(error){
   console.log("error conecction db");
   }
@@ -49,6 +50,11 @@ app.use(session({
 resave:true,
 saveUninitialized:true
 }))
+
+passportInit();
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.engine('handlebars',handlebars.engine());
 app.set('views',`${__dirname}/views` ); 
