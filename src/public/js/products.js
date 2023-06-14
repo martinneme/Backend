@@ -103,11 +103,10 @@ const logout =  async () => {
     });
 
     const response = await rs.json();
-    if(response.logout){
-        console.log(response)
+    if(response.status === 'Success'){
         window.location.href='/'
     }else{
-        console.log(response)
+        console.error(response)
     }
 
 }

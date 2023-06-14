@@ -3,8 +3,9 @@ import {
 } from "express";
 import Products from "../dao/dbManagers/products.js";
 import addProductValidator from "../middlewares/addProductValidator.js";
-import __dirname from '../utils.js';
+import __dirname, { authToken } from '../utils.js';
 import { privateAccess } from "../middlewares/accessValidator.js";
+import passport from "passport";
 
 
 const productsRouter = Router();
@@ -12,7 +13,7 @@ const productsRouter = Router();
 const productsManager = new Products();
 
 
-productsRouter.get("/",privateAccess, async (req, res) => {
+productsRouter.get("/",passport.authenticate('jwt',{session:false}), async (req, res) => {
 const {limit, page,sort,title,price,category,status} = req.query;
 const query = {}
 
@@ -31,8 +32,8 @@ if(status){
 
     
     const products = await productsManager.getAll(limit,page,query,sort) ;
-    const user = req.session.user;
-    products.user = user;
+
+    products.user = req.user;
     res.render('home',{products})
 });
 

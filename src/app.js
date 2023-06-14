@@ -12,10 +12,9 @@ import FileManager from './dao/fileManagers/FileManager.js';
 import Products from './dao/dbManagers/products.js';
 import Messages from './dao/dbManagers/messages.js';
 import mongoose from 'mongoose';
-import session from 'express-session';
-import MongoStore from 'connect-mongo';
-import passportInit from './config/passport.config.js';
+import cookieParser from 'cookie-parser';
 import passport from 'passport';
+import passportInit from './config/passport.config.js';
 
 
 const fileManager = new FileManager("./db/products.json");
@@ -28,7 +27,7 @@ export const socketServer = new SocketServer(httpServer);
 export  const io = socketServer; 
 
 try{
-  await mongoose.connect('mongodb+srv://mnmongodb:dbpass07@dbmongoazure.nrqqfgp.mongodb.net/ecommerce1')
+  await mongoose.connect('mongodb+srv://mnmongodb:dbpass07@dbmongoazure.nrqqfgp.mongodb.net/ecommerce')
   }catch(error){
   console.log("error conecction db");
   }
@@ -40,25 +39,16 @@ app.use('/products/realtimeproducts',express.static(`${__dirname}/public`));
 app.use('/products/',express.static(`${__dirname}/public`));
 app.use('/chats',express.static(`${__dirname}/public`));
 app.use('/carts/',express.static(`${__dirname}/public`));
-app.use(session({
-  store:MongoStore.create({
-    client:mongoose.connection.getClient(),
-    collectionName: 'sessions', 
-    ttl:1000
-  }),
-  secret:'Mn-C0DERHOUSE',
-resave:true,
-saveUninitialized:true
-}))
 
+
+app.use(cookieParser())
 passportInit();
 app.use(passport.initialize());
-app.use(passport.session());
-
 
 app.engine('handlebars',handlebars.engine());
 app.set('views',`${__dirname}/views` ); 
 app.set('view engine',`handlebars` ); 
+
 
 app.use('/products',productsRouter)
 app.use('/carts',cartsRouter)

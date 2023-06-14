@@ -1,77 +1,80 @@
-import { Router } from "express";
+import {
+  Router
+} from "express";
 import Users from "../dao/dbManagers/users.js";
-import __dirname from "../utils.js";
-import passport from 'passport';
+import __dirname, {
+  generateToken
+} from "../utils.js";
+
 const sessionsRouter = Router();
 
 const usersManager = new Users();
 
-sessionsRouter.post("/register", passport.authenticate('register', { failureRedirect: '/' }), async (req, res) => {
-  res.send({ status: 'success', message: 'User registered' })
-});
+sessionsRouter.post("/register", async (req, res) => {
+  try {
+    const {
+      firstName,
+      lastName,
+      email,
+      password
+    } = req.body;
 
+    const exist = await usersManager.findIfExist(email)
 
-sessionsRouter.post("/login",  passport.authenticate('login', { failureRedirect: 'fail-login' }),async (req, res) => {
-  if (!req.user) return res.status(400).send({ status: 'error', error: 'Invalid credentials' });
+    if (exist) return res.status(400).send({
+      status: "Error",
+      error: "User already exist",
+    });
 
-  let admin = req?.user?.email === 'adminCoder@coder.com' ? true : false;
-
-    req.session.user = {
-      name: `${req.user.firstName} ${req.user.lastName}`,
-      email: req.user.email,
-      age: req.user.age,
-      isAdmin:admin
+    const user = {
+      firstName,
+      lastName,
+      email,
+      password
     };
 
-    res.send({
-        status: "Success",
-        autorizated: true
-      });
-
+    await usersManager.save(user)
+    const accessToken = generateToken(user);
+    res.cookie(
+      'coderCookieToken', accessToken, { maxAge: 60 * 60 * 1000, httpOnly: true }
+  ).send({ status: 'success' });
+  } catch (error) {
+    console.log(error)
+  }
 });
 
-sessionsRouter.get('/github',passport.authenticate('github',{scope:['user:email']}),async (req,res)=>{
-  res.send({
-    status: "Success",
-    autorizated: true
-  });
-})
+sessionsRouter.post("/login", async (req, res) => {
+  try {
+    const {
+      email,
+      password
+    } = req.body;
 
-sessionsRouter.get('/github-callback',passport.authenticate('github',{failureRedirect:'/login'}),async (req,res)=>{
-  if (!req.user) return res.status(400).send({ status: 'error', error: 'Invalid credentials' });
-  let admin = req?.user?.email === 'adminCoder@coder.com' ? true : false;
-
-  req.session.user = {
-    name: `${req.user.firstName} ${req.user.lastName}`,
-    email: req.user.email,
-    age: req.user.age,
-    isAdmin:admin
-  };
-
-  res.redirect("/products")
-})
-
-
-sessionsRouter.get("/logout", async (req, res) => {
-  let result;
-  await req.session.destroy((err) => {
-    if (err) {
-      console.log("Error al destruir la sesión:", err);
+    const user = await usersManager.LoginValidate(email, password);
+    if (!user)
       return res.status(400).send({
         status: "Error",
-        logout: false
+        autorizated: false
       });
-    } else {
-      console.log("Sesión destruida correctamente");
-      return res.send({
-        status: "Success",
-        logout: true
-      })
-    }});
 
 
+    const accessToken = generateToken(user);
 
-return  result
-  });
+    res.cookie(
+      'coderCookieToken', accessToken, { maxAge: 60 * 60 * 1000, httpOnly: true }
+  ).send({ status: 'success' });
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: 'error',
+      error: error.message
+    });
+  }
+});
+
+sessionsRouter.get("/logout", async (req, res) => {
+   res.clearCookie('coderCookieToken').send({status:'Success'});
+});
 
 export default sessionsRouter;
