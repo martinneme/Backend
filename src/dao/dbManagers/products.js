@@ -51,4 +51,10 @@ export default class Products extends ManagerDb {
 
 }
 
+
+findElementById = async (id) => {
+    const resultCart = await this.model.findById({_id:id}).lean();
+    return resultCart
+}
+
 }

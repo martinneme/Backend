@@ -1,101 +1,86 @@
-import {
-    Router
-} from "express";
+import Router from './router.js';
 import Products from "../dao/dbManagers/products.js";
 import addProductValidator from "../middlewares/addProductValidator.js";
-import __dirname, { authToken } from '../utils.js';
-import { privateAccess } from "../middlewares/accessValidator.js";
-import passport from "passport";
-
-
-const productsRouter = Router();
-
 const productsManager = new Products();
 
 
-productsRouter.get("/",passport.authenticate('jwt',{session:false}), async (req, res) => {
-const {limit, page,sort,title,price,category,status} = req.query;
-const query = {}
+export default class ProductsRouter extends Router {
+    init() {
+        this.get('/', ['USER','ADMIN'], async (req, res) => {
+            const {limit, page,sort,title,price,category,status} = req.query;
+            const query = {}
+            
+            if(title){
+                query.title = title;
+            }
+            if(price){
+                query.price = parseInt(price);
+            }
+            if(category){
+                query.category = category;
+            }
+            if(status){
+                query.status = status;
+            }
+            
+                
+                const products = await productsManager.getAll(limit,page,query,sort) ;
+            
+                products.user = req.user;
+                res.render('home',{products})
 
-if(title){
-    query.title = title;
-}
-if(price){
-    query.price = parseInt(price);
-}
-if(category){
-    query.category = category;
-}
-if(status){
-    query.status = status;
-}
+        });
 
-    
-    const products = await productsManager.getAll(limit,page,query,sort) ;
+        this.get("/product/:id",['USER','ADMIN'], async (req, res) => {
+            try{
+                const id = req.params.id
+        const products = await productsManager.findElementById(id);
+            res.sendSuccess({status:'success',payload:products})
+            }catch(error){
+                res.sendClientError(error)
+            }
+            
+        });   
 
-    products.user = req.user;
-    res.render('home',{products})
-});
-
-productsRouter.get("/product/:id", async (req, res) => {
-    try{
-        const id = req.params.id
-const products = await productsManager.findElementById(id);
-    res.send({status:'success',payload:products})
-    }catch(error){
-        res.status(400).send({status:'error',error})
-    }
-    
-});
-
-
-productsRouter.post("/", addProductValidator, async (req, res) => {
-    try {
-        const element = req.body;
-        const products = await productsManager.save(element);
-        if(products){
-            res.send("Producto Agregado!");
+ this.post("/", addProductValidator, async (req, res) => {
+        try {
+            const element = req.body;
+            const products = await productsManager.save(element);
+            if(products){
+                res.sendSuccess("Producto Agregado!");
+            }
+        } catch (error) {
+            res.sendClientError(error)
         }
-    } catch (error) {
-        res.status(400).send().json({
-            error: error
-        });
-    }
-});
+    });
+
+    this.put("/:id",async (req, res) => {
+        try {
+            const element = req.body;
+            const id = req.params.id
+            const products = await productsManager.update(id,element);
+            res.sendSuccess({status:'success', payload: products});
+        } catch (error) {
+            res.sendClientError(error)
+        }
+    });
 
 
-productsRouter.put("/:id",async (req, res) => {
-    try {
-        const element = req.body;
-        const id = req.params.id
-        const products = await productsManager.update(id,element);
-        res.json({status:'success', payload: products});
-             
-    } catch (error) {
-        res.status(400).json({
-            error: error
-        });
-    }
-});
-
-productsRouter.delete("/:id",async (req, res) => {
-    try {
-        const id = req.params.id
-        const products = await productsManager.delete(id);
-        res.json({status:'success', payload: products});
-             
-    } catch (error) {
-        res.status(400).json({
-            error: error
-        });
-    }
-});
-
-productsRouter.get("/realtimeproducts", async (req, res) => {
-    const products = await productsManager.getAll() ;
+    this.delete("/:id",async (req, res) => {
+        try {
+            const id = req.params.id
+            const products = await productsManager.delete(id);
+            res.sendSuccess({status:'success', payload: products});
+        } catch (error) {
+            res.sendClientError(error)
+        }
+    });
     
-    res.render('realTimeProducts')
-});
+    this.get("/realtimeproducts", async (req, res) => {
+        res.render('realTimeProducts')
+    });
 
+    }
 
-export default productsRouter;
+   
+}

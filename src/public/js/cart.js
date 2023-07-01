@@ -23,7 +23,8 @@ const deleteItemCartDB = async (cid, pid) => {
     const rs = await fetch(`/carts/${cid}/product/${pid}`, {
         method: 'DELETE',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Cookie': `${document.cookie['coderCookieToken']}`
         }   
     });
     const response = await rs.json();
@@ -49,7 +50,8 @@ const deleteCartDB = async (cid) => {
     const rs = await fetch(`/carts/${cid}`, {
         method: 'DELETE',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Cookie': `${document.cookie['coderCookieToken']}`
         }   
     });
     const response = await rs.json();

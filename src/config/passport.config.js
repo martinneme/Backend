@@ -12,7 +12,8 @@ passport.use('jwt',new JWTStrategy({
     secretOrKey:'MartinNeme'
 },async(jwt_payload,done)=>{
     try{
-        return done(null,jwt_payload.user)
+        const user = jwt_payload.user
+        return done(null,user)
     }catch(error){
         return done(error)
     }

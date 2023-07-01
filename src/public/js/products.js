@@ -85,7 +85,8 @@ const getCart = async (id) => {
     const rs = await fetch(`/carts/${id}`, {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Cookie': `${document.cookie['coderCookieToken']}`
         }
     });
     const response = await rs.json();
@@ -113,10 +114,11 @@ const logout =  async () => {
 
 
 const updateQuantityProd = async (cid, pid, quantity) => {
-    const rs = await fetch(`/carts/${cid}/products/${pid}`, {
+    const rs = await fetch(`/carts/${cid}/update/products/${pid}`, {
         method: 'PUT',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Cookie': `${document.cookie['coderCookieToken']}`
         },
         body: JSON.stringify({
             "quantity": quantity
@@ -133,7 +135,10 @@ const updateQuantityProd = async (cid, pid, quantity) => {
 
 const CreateCart = async () => {
     const rs = await fetch('/carts/', {
-        method: 'POST'
+        method: 'POST',
+        headers: {
+            'Cookie': `${document.cookie['coderCookieToken']}`
+          }
     });
     const response = await rs.json();
     return response
@@ -143,7 +148,7 @@ const AddToCartDB = async (cid, pid,quantity) => {
     const rs = await fetch(`/carts/${cid}/products/${pid}`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Cookie': `${document.cookie['coderCookieToken']}`
         },
         body: JSON.stringify({
             "quantity": quantity
