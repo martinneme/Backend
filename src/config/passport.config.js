@@ -1,5 +1,6 @@
 import passport from 'passport'
 import jwt from 'passport-jwt'
+import config from "./config.js"
 
 
 
@@ -9,7 +10,7 @@ const ExtractJWT = jwt.ExtractJwt;
 const passportInit = () => {
 passport.use('jwt',new JWTStrategy({
     jwtFromRequest:ExtractJWT.fromExtractors([cookieExtractor]),
-    secretOrKey:'MartinNeme'
+    secretOrKey:config.secretPassport
 },async(jwt_payload,done)=>{
     try{
         const user = jwt_payload.user

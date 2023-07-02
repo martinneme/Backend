@@ -1,5 +1,4 @@
 import { Router as expressRouter } from 'express';
-// import jwt from 'jsonwebtoken';
 import passport from "passport";
 
 export default class Router {

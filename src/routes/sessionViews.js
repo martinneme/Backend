@@ -1,24 +1,15 @@
 import Router from './router.js';
-
+import {  registrer,login,logout } from '../controllers/sessionsViewsController.js';
 
 export default class SessionsViews extends Router {
     init() {
         
-        this.get("/register",['PUBLIC'], async (req, res) => {
-            res.render('register')
-          
-         });
+        this.get("/register",['PUBLIC'],registrer);
 
-         this.get("/login", ['PUBLIC'], async (req, res) => {
-            res.render('login')
-         });
+         this.get("/login", ['PUBLIC'],login);
        
        
-         this.get("/", ['USER','ADMIN'], async (req, res) => {
-            res.render('profile',({
-               user:req.user
-            }))
-         });
+         this.get("/", ['USER','ADMIN'],logout);
 
     }
 
