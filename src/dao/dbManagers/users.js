@@ -1,7 +1,7 @@
 import { usersModel } from "../models/users.js";
 import { comparePassword ,createPasswordHash} from "../../utils.js";
 import ManagerDb from "./managerDb.js";
-import bcrypt from 'bcrypt';
+
 
 export default class Users extends ManagerDb{
     constructor(){
@@ -27,13 +27,10 @@ export default class Users extends ManagerDb{
 
 
        save = async (user) => {
-        try {
           const hashedPassword =  await createPasswordHash(user.password)
           const newUser = { ...user, password: hashedPassword };
           this.model.create(newUser)
-        } catch (error) {
-          throw new Error('Error al crear el usuario');
-        }
+    
       };
 
 
