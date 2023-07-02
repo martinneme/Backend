@@ -131,8 +131,6 @@ const updateQuantityProd = async (cid, pid, quantity) => {
 }
 
 
-
-
 const CreateCart = async () => {
     const rs = await fetch('/carts/', {
         method: 'POST',
@@ -148,6 +146,7 @@ const AddToCartDB = async (cid, pid,quantity) => {
     const rs = await fetch(`/carts/${cid}/products/${pid}`, {
         method: 'POST',
         headers: {
+            'Content-Type': 'application/json',
             'Cookie': `${document.cookie['coderCookieToken']}`
         },
         body: JSON.stringify({

@@ -1,7 +1,7 @@
 import express from 'express';
 import messagesRouter from './routes/messages.js'
 import SessionsRouter from './routes/sessions.js';
-import sessionViewsRouter from './routes/sessionsViews.js';
+import SessionsViews from './routes/sessionViews.js';
 import handlebars  from 'express-handlebars';
 import __dirname from './utils.js';
 import {Server as HTTPServer} from 'http'
@@ -22,6 +22,7 @@ const messagesManager = new Messages();
 const productsRouter = new ProductsRouter();
 const cartsRouter = new CartsRouter();
 const sessionsRouter = new SessionsRouter();
+const sessionsViews = new SessionsViews();
 
 const app = express();
 const httpServer = new HTTPServer(app);
@@ -50,7 +51,7 @@ app.use('/products', productsRouter.getRouter() )
 app.use('/carts',cartsRouter.getRouter())
 app.use('/chat',messagesRouter)
 app.use('/api',sessionsRouter.getRouter())
-app.use('/',sessionViewsRouter)
+app.use('/',sessionsViews.getRouter())
 
 
 
