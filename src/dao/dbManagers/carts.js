@@ -18,7 +18,6 @@ export default class Carts extends ManagerDb {
 
 
     addProductToCart = async (idCart, idProd,quantity) => {
-      console.log(quantity)
         const prod = { product: idProd, quantity: quantity };
         const updatedCart = await this.model.findByIdAndUpdate(
           idCart,

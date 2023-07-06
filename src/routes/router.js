@@ -53,7 +53,6 @@ export default class Router {
         if (policies[0] === 'PUBLIC') {
           return next();
         }
-      
         passport.authenticate('jwt', { session: false })(req, res, (err) => {
           if (err) {
             return next(err);
@@ -62,7 +61,6 @@ export default class Router {
           if (!req.user) {
             return res.status(401).json({ message: 'No token provided' });
           }
-      
           if (!policies.includes(req.user.role.toUpperCase())) {
             return res.status(403).json({ message: 'Forbidden' });
           }

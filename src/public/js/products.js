@@ -106,6 +106,7 @@ const logout =  async () => {
 
     const response = await rs.json();
     if(response.status === 'Success'){
+        localStorage.removeItem('cartId');
         window.location.href='/login'
     }else{
         console.error(response)

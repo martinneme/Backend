@@ -29,8 +29,8 @@ export default class Users extends ManagerDb{
        save = async (user) => {
           const hashedPassword =  await createPasswordHash(user.password)
           const newUser = { ...user, password: hashedPassword };
-          this.model.create(newUser)
-    
+         const userCreated = await this.model.create(newUser)
+    return userCreated
       };
 
 
