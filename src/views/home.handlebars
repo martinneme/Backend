@@ -9,8 +9,8 @@
     <span class="cart-badge" id="quantityBadge">0</span>
         </button>
           <div id="user-profile" class="panelUser">
-  <p id="usernameProfile">Username: {{products.user.name}}</p>
-  <p id="emailProfile">Email: {{products.user.email}}</p>
+  <p id="usernameProfile">{{products.user.firstName}} {{products.user.lastName}}</p>
+  <p id="emailProfile">{{products.user.email}}</p>
   <p id="adminProfile">Role: {{products.user.role}}</p>
 <button id="logout"  ><a href="/">Profile</a></button>
 <button id="logout" onclick="logout()" >Logout</button>

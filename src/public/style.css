@@ -235,7 +235,22 @@ a:hover{
       display: flex;
       align-items: center;
       margin: auto;
+  
     }
+
+
+    .butttonCart {
+      border:none;
+      border-radius: 6px;
+      background-color: #ab63d4;
+      padding: 5px;
+      color: #ffffff;
+        }
+    
+        .butttonCart:hover{
+        background-color: #ffffff;
+        color: #000;
+        }
     
     #reduceQuantity,
     #incrementQuantity {
@@ -276,7 +291,7 @@ a:hover{
 
     .boxCart{
       display: flex;
-      background-color: gainsboro;
+      background-color: #ffffff;
       width: 100%;
       position: absolute;
       top:10px;
@@ -380,7 +395,7 @@ a:hover{
 margin: auto;
     width: 85%;
     margin-top: 10%;
-    background-color:gainsboro ;
+    background-color:#ffffff ;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 1rem;
@@ -609,6 +624,7 @@ margin: auto;
       width: 30%;
       border-radius: 5px;
       margin-left: 60%;
+      background-color: #ab63d4;
       
     }
     
@@ -623,9 +639,17 @@ margin: auto;
     #logout{
       margin-left: 1%;
       border: none;
+      background-color: #ab63d4;
     }
 
+    #logout a{
+      color: #000;
+    }
+
+  
+
     #logout:hover{
-      background-color: #000;
-      color: white;
+      background-color: #ffffff;
+      color: #000;
+
     }
