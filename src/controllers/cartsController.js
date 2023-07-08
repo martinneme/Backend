@@ -41,7 +41,6 @@ const addProductToCartById =  async (req, res) => {
         const idProd = req.params.idprod;
         const id = req.params.id
         const quantity = req.body.quantity
-        console.log(quantity)
 
         const cart = await addProdToCart(id, idProd, quantity);
         if (cart) {

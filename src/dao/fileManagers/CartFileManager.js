@@ -20,7 +20,6 @@ async addProductToCart(cid,pid) {
       }
       const findInCart = cart.products.find(e=>{
         if(e.pid === pid){
-            console.log("entro")
             e.quantity++
             return 1
         }}

@@ -11,10 +11,8 @@
           <div id="user-profile" class="panelUser">
   <p id="usernameProfile">Username: {{products.user.name}}</p>
   <p id="emailProfile">Email: {{products.user.email}}</p>
-  <p id="adminProfile">Admin: {{products.user.isAdmin}}</p>
-  {{#if products.user.isAdmin}}
+  <p id="adminProfile">Role: {{products.user.role}}</p>
 <button id="logout"  ><a href="/">Profile</a></button>
-  {{/if}}
 <button id="logout" onclick="logout()" >Logout</button>
 </div>
     </div>
