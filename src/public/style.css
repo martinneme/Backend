@@ -248,7 +248,7 @@ a:hover{
         }
     
         .butttonCart:hover{
-        background-color: #ffffff;
+          background-color: #b67fd6;
         color: #000;
         }
     
@@ -623,8 +623,8 @@ margin: auto;
       display: flex;
       width: 30%;
       border-radius: 5px;
-      margin-left: 60%;
-      background-color: #ab63d4;
+      margin-left: 70%;
+      background-color: #ffffff;
       
     }
     
@@ -636,20 +636,17 @@ margin: auto;
   
     }
 
-    #logout{
+    #logout,#logout a{
       margin-left: 1%;
       border: none;
       background-color: #ab63d4;
+      border-radius: 6px;
+      color:#ffffff
     }
 
-    #logout a{
-      color: #000;
-    }
-
-  
 
     #logout:hover{
-      background-color: #ffffff;
+      background-color: #b67fd6;
       color: #000;
 
     }

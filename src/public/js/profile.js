@@ -8,10 +8,11 @@ const logout =  async () => {
     });
 
     const response = await rs.json();
-    if(response.logout){
+    if(response.status === 'Success'){
+        localStorage.removeItem('cartId');
         window.location.href='/login'
     }else{
-        console.log(response)
+        console.error(response)
     }
 
 }
