@@ -1,4 +1,4 @@
-[{
+{"products":[{
     "id": 1,
     "title": "Zapatillas Nike",
     "description": "Zapatillas deportivas de última generación",
@@ -78,4 +78,4 @@
     "stock": "4354",
     "status": "false",
     "id": 9
-}]
+}]}

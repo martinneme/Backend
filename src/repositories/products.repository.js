@@ -1,15 +1,11 @@
-// import Products from '../dao/dbManagers/products.js';
-
 export default class ProductsRepository {
     constructor(Products){
         this.product = Products;
     }
-
-
     
  getAllProducts = async (limit, page , query,sortValue) => {
-    return  await this.product.getAll(limit, page , query,sortValue);
-    
+   const products = await this.product.getAll(limit, page , query,sortValue);
+      return products
     }
     
      findProductById =  async (id) => {

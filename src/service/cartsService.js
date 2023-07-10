@@ -1,6 +1,5 @@
-import CartsRepository from '../repositories/carts.repository.js';
+import {cartsRepository} from '../repositories/index.js';
 
-const cartsRepository = new CartsRepository();
 
 
 const findCartById =  async (id) => {

@@ -1,23 +1,23 @@
-import Users from '../dao/dbManagers/users.js';
+
 
 export default class SessionsRepository {
-    constructor() {
-        this.dao = new Users();
+    constructor(Sessions) {
+        this.sessions = Sessions;
     }
 
      findUserExist = async (emailUser) =>{
-        return await  this.dao.findIfExist(emailUser);
+        return await  this.sessions.findIfExist(emailUser);
     }
     
      validateLogin = async (emailUser,passUser) =>{
-        return await  this.dao.LoginValidate(emailUser,passUser);
+        return await  this.sessions.LoginValidate(emailUser,passUser);
     }
     
      saveUser = async (user)=> {
-        return await  this.dao.save(user);
+        return await  this.sessions.save(user);
     }
     
      findUserByID = async (id) =>{
-        return await  this.dao.findById(id);
+        return await  this.sessions.findById(id);
     }
 }

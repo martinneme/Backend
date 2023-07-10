@@ -1,5 +1,5 @@
 import Router from './router.js';
-import {  registrer,login,logout } from '../controllers/sessionsViewsController.js';
+import {  registrer,login,profile } from '../controllers/sessionsViewsController.js';
 
 export default class SessionsViews extends Router {
     init() {
@@ -9,7 +9,7 @@ export default class SessionsViews extends Router {
          this.get("/login", ['PUBLIC'],login);
        
        
-         this.get("/", ['USER','ADMIN'],logout);
+         this.get("/", ['USER','ADMIN'],profile);
 
     }
 

@@ -1,6 +1,5 @@
-import SessionsRepository from "../repositories/sessions.repository.js";
+import {sessionsRepository} from "../repositories/index.js";
 
-const sessionsRepository = new SessionsRepository();
 
 const findUserExist = async (emailUser) =>{
     return await sessionsRepository.findUserExist(emailUser);

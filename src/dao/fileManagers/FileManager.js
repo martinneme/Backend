@@ -55,7 +55,7 @@ export default class FileManager {
     return obj.id
   }
 
-  async getsProducts() {
+  async getAll(limit = 10, page = 1, query = '', sortValue) {
     const content = await this.readFile();
     const contentText = await JSON.parse(content);
     return contentText;

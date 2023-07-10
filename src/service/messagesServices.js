@@ -1,13 +1,12 @@
-import Messages from "../dao/dbManagers/messages.js";
+import {messagesRepository} from '../repositories/index.js';
 
-const messages = new Messages();
 
 const saveNewMessage = async (msg) => {
-    return await messages.save();
+    return await messagesRepository.saveNewMessage();
 }
 
 const getAllMessages = async () => {
-    return await messages.getAll();
+    return await messagesRepository.getAllMessages();
 }
 
 

@@ -1,6 +1,9 @@
 import config from "../config/config.js";
 
 let Products;
+let Carts;
+let Sessions;
+let Messages;
 const persistence = config.persistence;
 
 switch(persistence) {
@@ -9,15 +12,31 @@ switch(persistence) {
         const mongoose = await import("mongoose");
         await mongoose.connect(config.mongoUrl);
         const { default: MongoProducts } = await import('../dao/dbManagers/products.js');
-        Products = MongoProducts;
+        const { default: MongoCarts } = await import('../dao/dbManagers/carts.js');
+        const { default: MongoSessions } = await import('../dao/dbManagers/users.js');
+        const { default: MongoMessages } = await import('../dao/dbManagers/messages.js');
+        Products = new MongoProducts();
+        Carts = new MongoCarts();
+        Sessions =new MongoSessions();
+        Messages =new MongoMessages();
         break;
-    case 'MEMORY':
-        console.log('Trabajando con MEMORY');
-        const { default: ContactsMemory } = await import('./memory/contact.memory.js');
-        Contacts = ContactsMemory;
+    case 'FILE':
+        console.log('Trabajando con FILE');
+        const { default: fileManager } = await import('./fileManagers/FileManager.js');
+        const { default: cartManager } = await import('./fileManagers/CartFileManager.js');
+        const { default: userFileManager } = await import('./fileManagers/UserFileManager.js');
+        const productsManagerFile = new fileManager('./db/products.json');
+        const cartsManagerFile = new cartManager('./db/cart.json');
+        const userManagerFile = new userFileManager('./db/users.json');
+        Products = productsManagerFile;
+        Carts = cartsManagerFile;
+        Sessions = userManagerFile;
         break;
 }
 
 export {
-    Products
+    Products,
+    Carts,
+    Sessions,
+    Messages
 }
