@@ -1,21 +1,21 @@
-import Users from "../dao/dbManagers/users.js";
+import SessionsRepository from "../repositories/sessions.repository.js";
 
-const users = new Users();
+const sessionsRepository = new SessionsRepository();
 
 const findUserExist = async (emailUser) =>{
-    return await users.findIfExist(emailUser);
+    return await sessionsRepository.findUserExist(emailUser);
 }
 
 const validateLogin = async (emailUser,passUser) =>{
-    return await users.LoginValidate(emailUser,passUser);
+    return await sessionsRepository.validateLogin(emailUser,passUser);
 }
 
 const saveUser = async (user)=> {
-    return await users.save(user);
+    return await sessionsRepository.saveUser(user);
 }
 
 const findUserByID = async (id) =>{
-    return await users.findById(id);
+    return await sessionsRepository.findUserByID(id);
 }
 
 

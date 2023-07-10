@@ -1,28 +1,27 @@
-import Products from '../dao/dbManagers/products.js';
+import {productsRepository} from '../repositories/index.js';
 
-const products = new Products();
 
 const getAllProducts = async (limit, page , query,sortValue) => {
-return  await products.getAll(limit, page , query,sortValue);
+return  await productsRepository.getAllProducts(limit, page , query,sortValue);
 
 }
 
 const findProductById =  async (id) => {
-    return await products.findElementById(id);
+    return await productsRepository.findProductById(id);
 }
 
 
 const addProduct = async (product) => {
-    return await products.save(product);
+    return await productsRepository.addProduct(product);
 }
 
 const updateProductById = async(id,product) => {
-    return await product.update(id,product);
+    return await productsRepository.updateProductById(id,product);
 }
 
 
 const deleteProductById = async (id) => {
-    return await products.delete(id);
+    return await productsRepository.deleteProductById(id);
 }
 
 export {

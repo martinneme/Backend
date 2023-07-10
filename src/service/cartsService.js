@@ -1,33 +1,33 @@
-import Carts from '../dao/dbManagers/carts.js';
+import CartsRepository from '../repositories/carts.repository.js';
 
-const carts = new Carts();
+const cartsRepository = new CartsRepository();
 
 
 const findCartById =  async (id) => {
-    return await carts.findElementById(id);
+    return await cartsRepository.findCartById(id);
 }
 
 
 const createCart = async () => {
-    return await carts.save();
+    return await cartsRepository.createCart();
 }
 
 
 const addProdToCart = async (idCart, idProd,quantity) =>{
-    return await carts.addProductToCart(idCart, idProd,quantity)
+    return await cartsRepository.addProdToCart(idCart, idProd,quantity)
 }
 
 const updateProdQuantityInCart = async(idCart, pid,quantity) => {
-    return await carts.updateQuantityProdInCart(idCart, pid,quantity);
+    return await cartsRepository.updateProdQuantityInCart(idCart, pid,quantity);
 }
 
 
 const ClearCartById = async (idCart) => {
-    return await carts.clearCart(idCart);
+    return await cartsRepository.ClearCartById(idCart);
 }
 
 const deleteProdInCart = async (idCart,pid) => {
-    return await carts.deleteProductByID(idCart,pid)
+    return await cartsRepository.deleteProdInCart(idCart,pid)
 }
 
 export {
