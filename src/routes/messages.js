@@ -1,21 +1,16 @@
+import Router from './router.js';
 import {
-    Router
-} from "express";
-import Messages from "../dao/dbManagers/messages.js";
-import { saveMessage,getAllMsg } from "../controllers/messagesController.js";
-import __dirname from '../utils.js';
-
-
-const messagesRouter = Router();
-
-const messagesManager = new Messages();
-
-messagesRouter.get("/", getAllMsg);
+    saveMessage,getAllMsg
+} from '../controllers/messagesController.js';
 
 
 
-messagesRouter.post("/",saveMessage );
+export default class MessagesRouter extends Router {
+    init() {
+        this.get("/",['USER'], getAllMsg);
 
+        this.post("/",['USER'],saveMessage );
 
+    }
 
-export default messagesRouter;
+}

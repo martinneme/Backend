@@ -4,6 +4,7 @@ let Products;
 let Carts;
 let Sessions;
 let Messages;
+let Tickets;
 const persistence = config.persistence;
 
 switch(persistence) {
@@ -15,10 +16,12 @@ switch(persistence) {
         const { default: MongoCarts } = await import('../dao/dbManagers/carts.js');
         const { default: MongoSessions } = await import('../dao/dbManagers/users.js');
         const { default: MongoMessages } = await import('../dao/dbManagers/messages.js');
+        const { default: MongoTickets } = await import('../dao/dbManagers/ticket.js');
         Products = new MongoProducts();
         Carts = new MongoCarts();
         Sessions =new MongoSessions();
         Messages =new MongoMessages();
+        Tickets = new MongoTickets();
         break;
     case 'FILE':
         console.log('Trabajando con FILE');
@@ -38,5 +41,6 @@ export {
     Products,
     Carts,
     Sessions,
-    Messages
+    Messages,
+    Tickets
 }

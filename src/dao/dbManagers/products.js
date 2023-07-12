@@ -51,6 +51,13 @@ export default class Products extends ManagerDb {
 
 }
 
+reduceStock = async (idProd,quantityToReduce) => {
+  return  await this.model.updateOne(
+        { _id: idProd },
+        { $inc: { stock: -quantityToReduce } }
+      );
+}
+
 
 findElementById = async (id) => {
     const resultCart = await this.model.findById({_id:id}).lean();

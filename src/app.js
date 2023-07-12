@@ -23,6 +23,7 @@ const productsRouter = new ProductsRouter();
 const cartsRouter = new CartsRouter();
 const sessionsRouter = new SessionsRouter();
 const sessionsViews = new SessionsViews();
+const msgRouter = new messagesRouter();
 
 const app = express();
 const httpServer = new HTTPServer(app);
@@ -49,7 +50,7 @@ app.set('view engine',`handlebars` );
 
 app.use('/products', productsRouter.getRouter() )
 app.use('/carts',cartsRouter.getRouter())
-app.use('/chat',messagesRouter)
+app.use('/chat',msgRouter.getRouter())
 app.use('/api',sessionsRouter.getRouter())
 app.use('/',sessionsViews.getRouter())
 

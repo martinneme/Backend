@@ -24,6 +24,10 @@ const deleteProductById = async (id) => {
     return await productsRepository.deleteProductById(id);
 }
 
+const reduceStock = async (idProd,quantityToReduce)=>{
+    return await productsRepository.reduceStock(idProd,quantityToReduce);
+}
+
 export {
     getAllProducts,findProductById,addProduct,updateProductById,deleteProductById
 }

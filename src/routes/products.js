@@ -1,5 +1,5 @@
 import Router from './router.js';
-import Products from "../dao/dbManagers/products.js";
+// import Products from "../dao/dbManagers/products.js";
 import addProductValidator from "../middlewares/addProductValidator.js";
 import {
     getProducts,
@@ -9,7 +9,7 @@ import {
     deleteProduct,
     renderProductsRealTime
 } from '../controllers/productsController.js';
-const productsManager = new Products();
+
 
 
 export default class ProductsRouter extends Router {
@@ -22,9 +22,9 @@ export default class ProductsRouter extends Router {
 
         this.put("/:id", ['ADMIN'], updateProduct);
 
-        this.delete("/:id", deleteProduct);
+        this.delete("/:id",['ADMIN'], deleteProduct);
 
-        this.get("/realtimeproducts", renderProductsRealTime);
+        this.get("/realtimeproducts", ['USER', 'ADMIN'],renderProductsRealTime);
 
     }
 

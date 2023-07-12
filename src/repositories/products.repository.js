@@ -26,5 +26,9 @@ export default class ProductsRepository {
         return await this.product.delete(id);
     }
 
+    reduceStock = async (idProd,quantityToReduce)=>{
+        return await this.product.reduceStock(idProd,quantityToReduce)
+    }
+
 
 }

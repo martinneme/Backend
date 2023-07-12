@@ -650,3 +650,16 @@ margin: auto;
       color: #000;
 
     }
+
+    .buyButton{
+      background-color: #25ecaa;
+      color: #ffffff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+  }
+
+  .buyButton:hover{
+    background-color: #20c58e;
+  }

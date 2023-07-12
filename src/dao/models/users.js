@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 const userscollection = "users";
-import bcrypt from 'bcrypt';
 
 const usersSchema = new mongoose.Schema({
     
