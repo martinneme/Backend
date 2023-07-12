@@ -1,5 +1,16 @@
 let isCartExist = localStorage.getItem('cartId') || null;
 
+const modal = document.getElementById("myModal");
+const productsTableAcepted = document.getElementById("productsAcepted");
+const totalAmount = document.getElementById("totalAmount");
+const openModalButton = document.getElementById("openModalButton");
+const closeButton = document.getElementsByClassName("close")[0];
+const codeLabel = document.getElementById("code");
+const emailLabel = document.getElementById("emailuser");
+const productsList = document.getElementById("products");
+const panelNotificacion = document.getElementById("panelNotificacion");
+
+
 function navigateTo() {
     window.location.href = '/products/';
 }
@@ -59,3 +70,64 @@ const deleteCartDB = async (cid) => {
     return response
 
 }
+
+
+const buy = async () => {
+    const rs = await fetch(`/carts/${isCartExist}/purchase`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Cookie': `${document.cookie['coderCookieToken']}`
+        }   
+    });
+    const response = await rs.json();
+if(response.status === 'success'){
+    if(response.payload.productsAccepted.length){
+         codeLabel.textContent = response.payload.purchase.code;
+    emailLabel.textContent =  response.payload.purchase.purchaser;
+    const productsAcepted = response.payload.productsAccepted;
+    totalAmount.textContent=response.payload.purchase.amount;
+    if(response.payload.productsRejected.length){
+        panelNotificacion.textContent="Products without sufficient stock will remain in your cart"
+    }
+    productsAcepted.forEach((product) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `<th>${product.title}</th><th> ${product.price}</th> <th>${product.quantity}</th>`;
+            productsTableAcepted.appendChild(row);
+          });
+    modal.style.display = "block";
+    }else{
+        alert('The selected products are out of stock')
+    }
+   
+}
+
+    return response
+}
+
+// JavaScript
+
+
+  // Mostrar el modal
+//   modal.style.display = "block";
+
+
+  // Asignar valores a los labels
+  codeLabel.textContent = "Código de compra";
+  emailLabel.textContent = "Correo electrónico";
+
+  // Crear elementos de lista para los productos
+//   const products = ["Producto 1", "Producto 2", "Producto 3"];
+//   products.forEach((product) => {
+//     const listItem = document.createElement("li");
+//     listItem.textContent = product;
+//     productsList.appendChild(listItem);
+//   });
+
+
+// Agregar un evento al botón para cerrar el modal
+closeButton.addEventListener("click", () => {
+  // Ocultar el modal
+  modal.style.display = "none";
+ window.location.href=`/carts/${isCartExist}`
+});
